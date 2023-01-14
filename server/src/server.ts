@@ -15,7 +15,7 @@ app.listen(port, async () => {
   console.log(`Server running at heep://localhost:${port}`);
 
   AppDataSource.initialize()
-    .then(async () => {
+    .then(() => {
       console.log("Database Initialized");
     })
     .catch((error) => console.log(error));

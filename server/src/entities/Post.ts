@@ -1,5 +1,5 @@
 import {
-  BaseEntity,
+  BeforeInsert,
   Column,
   Entity,
   In,
@@ -12,6 +12,7 @@ import {
 } from "typeorm";
 import Sub from "./Sub";
 import User from "./User";
+import BaseEntity from "./Entity";
 import { Expose, Exclude } from "class-transformer";
 
 @Entity("posts")
@@ -54,5 +55,26 @@ export default class Post extends BaseEntity {
 
   @Expose() get url(): string {
     return `/r/${this.subName}/${this.identifier}/${this.slug}`;
+  }
+
+  @Expose() get commentCount(): number {
+    return this.comments?.length;
+  }
+
+  @Expose() get voteScore(): number {
+    return this.votes?.reduce((memo, curt) => memo + (curt.value || 0), 0);
+  }
+
+  protected userVote: number;
+
+  setUserVote(user: User) {
+    const index = this.votes?.findIndex((v) => v.username === user.username);
+    this.userVote = index > -1 ? this.votes[index].value : 0;
+  }
+
+  @BeforeInsert()
+  makeIdAndSlug() {
+    this.identifier = makeId(7);
+    this.slug = slugify(this.title);
   }
 }

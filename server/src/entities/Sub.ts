@@ -9,6 +9,7 @@ import {
   OneToMany,
 } from "typeorm";
 import BaseEntity from "./Entity";
+import { Expose } from "class-transformer";
 
 @Entity("subs")
 export default class Sub extends BaseEntity {

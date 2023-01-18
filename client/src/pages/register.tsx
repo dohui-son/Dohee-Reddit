@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
+import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
+
 import InputGroup from "../components/InputGroup";
 
 const Register = () => {
@@ -8,12 +11,31 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<any>({}); // any type 추가
 
+  let router = useRouter();
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault(); // onSubmit 이벤트가 일어났을때 refrsh 되는것 방지
+
+    const res = await axios.post("/auth/register", {
+      email,
+      password,
+      username,
+    });
+    try {
+      console.log("res", res);
+      router.push("/login");
+    } catch (error: any) {
+      console.log(error);
+      setErrors(error.response.data || {});
+    }
+  };
+
   return (
     <div className="bg-white">
       <div className="flex flex-col items-center justify-center h-screen p-6">
         <div className="w-10/12 mx-auto md:d-96">
           <h1 className="mb-2 text-lg font-medium">📋 회원가입</h1>
-          <form>
+          <form onSubmit={handleSubmit}>
             <InputGroup
               placeholder="Email"
               value={email}

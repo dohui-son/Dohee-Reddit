@@ -12,6 +12,7 @@ import {
 } from "typeorm";
 import Sub from "./Sub";
 import User from "./User";
+import Vote from "./Vote";
 import BaseEntity from "./Entity";
 import { Expose, Exclude } from "class-transformer";
 import { makeId, slugify } from "../utils/helpers";

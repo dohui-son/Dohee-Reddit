@@ -5,14 +5,13 @@ import {
   In,
   Index,
   JoinColumn,
-  ManyToMany,
   ManyToOne,
-  NoVersionOrUpdateDateColumnError,
   OneToMany,
 } from "typeorm";
 import Sub from "./Sub";
 import User from "./User";
 import Vote from "./Vote";
+import Comment from "./Comment";
 import BaseEntity from "./Entity";
 import { Expose, Exclude } from "class-transformer";
 import { makeId, slugify } from "../utils/helpers";
@@ -52,7 +51,7 @@ export default class Post extends BaseEntity {
   comments: Comment[];
 
   @Exclude()
-  @OneToMany(() => NoVersionOrUpdateDateColumnError, (vote) => vote.post)
+  @OneToMany(() => Vote, (vote) => vote.post)
   votes: Vote[];
 
   @Expose() get url(): string {

@@ -18,6 +18,13 @@ const register = async (req: Request, res: Response) => {
   try {
     let errors: any = {};
 
+    if (isEmpty(email)) errors.email = "이메일은 필수 입력 정보입니다.";
+    if (isEmpty(username)) errors.username = "ID는 필수 입력 정보입니다.";
+    if (isEmpty(password)) errors.password = "비밀번호는 필수 입력 정보입니다.";
+    if (Object.keys(errors).length > 0) {
+      return res.status(400).json(errors);
+    }
+
     // 이메일 및 유저 중복 확인
     const emailUser = await User.findOneBy({ email });
     const usernameUser = await User.findOneBy({ username });

@@ -4,7 +4,7 @@ import Sub from "../entities/Sub";
 import userMiddleware from "../middlewares/user";
 import authMiddleware from "../middlewares/auth";
 import { isEmpty, validate } from "class-validator";
-import { getRepository } from "typeorm";
+import { getRepository, UpdateQueryBuilder } from "typeorm";
 
 const createSub = async (req: Request, res: Response, next) => {
   const { name, title, description } = req.body;
@@ -22,12 +22,26 @@ const createSub = async (req: Request, res: Response, next) => {
       .getOne();
     if (sub) errors.name = "이미 존재하는 커뮤니티 이름입니다.";
 
-    if (Object.keys(errors).length > 0) {
-      return res.status(400).json(errors);
-    }
+    if (Object.keys(errors).length > 0) throw errors;
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ error });
+    return res.status(500).json({ error: "문제가 발생했습니다." });
+  }
+
+  try {
+    const user: User = res.locals.user;
+
+    // sub(커뮤니티) instance 생성 및 bd에 저장
+    const sub = new Sub();
+    sub.name = name;
+    sub.description = description;
+    sub.user = user;
+    await sub.save();
+
+    return res.json(sub); // 완료후 fe로 전달
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "문제가 발생했습니다." });
   }
 };
 const router = Router();

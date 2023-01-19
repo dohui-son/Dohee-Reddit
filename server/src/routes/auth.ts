@@ -1,9 +1,12 @@
 import { isEmpty, validate } from "class-validator";
 import { Router, Request, Response } from "express";
-import User from "../entities/User";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import cookie from "cookie";
+
+import User from "../entities/User";
+import userMiddleware from "../middlewares/user";
+import authMiddleware from "../middlewares/auth";
 
 const mapError = (errors: Object[]) => {
   return errors.reduce((prev: any, err: any) => {
@@ -12,12 +15,17 @@ const mapError = (errors: Object[]) => {
   }, {});
 };
 
+const me = async (res: Response) => {
+  return res.json(res.locals.user);
+};
+
 const register = async (req: Request, res: Response) => {
   const { email, username, password } = req.body;
 
   try {
     let errors: any = {};
 
+    // Todo: 최적화
     if (isEmpty(email)) errors.email = "이메일은 필수 입력 정보입니다.";
     if (isEmpty(username)) errors.username = "ID는 필수 입력 정보입니다.";
     if (isEmpty(password)) errors.password = "비밀번호는 필수 입력 정보입니다.";
@@ -102,6 +110,8 @@ const login = async (req: Request, res: Response) => {
 };
 
 const router = Router();
+
+router.get("/me", userMiddleware, authMiddleware, me);
 router.post("/register", register);
 router.post("/login", login);
 

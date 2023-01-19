@@ -15,6 +15,7 @@ const Register = () => {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault(); // onSubmit 이벤트가 일어났을때 refrsh 되는것 방지
+
     try {
       const res = await axios.post("/auth/register", {
         email,

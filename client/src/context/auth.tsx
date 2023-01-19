@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     loading: true,
   });
 
-  console.log("state : ", state);
+  // console.log("context - state : ", state); user state 확인
 
   const dispatch = (type: string, payload?: any) => {
     defaultDispatch({ type, payload });

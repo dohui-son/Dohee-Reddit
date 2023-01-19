@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { FormEvent, useState } from "react";
-import InputGroup from "../components/InputGroup";
+import InputGroup from "../../components/InputGroup";
 
 const SubCreate = () => {
   const [name, setName] = useState("");
@@ -49,7 +49,7 @@ const SubCreate = () => {
             </p>
             <InputGroup
               placeholder="Topic"
-              value={decription}
+              value={title}
               setValue={setTitle}
               error={errors.title}
             />

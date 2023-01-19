@@ -78,7 +78,7 @@ const login = async (req: Request, res: Response) => {
     // token생성
     const token = jwt.sign({ user }, process.env.JWT_SECRET);
     // 쿠키 저장
-    res.set("Set-Cooke", cookie.serialize("token", token));
+    res.set("Set-Cookie", cookie.serialize("token", token));
 
     return res.json({ user, token });
   } catch (error) {

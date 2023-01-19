@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
+import axios from "axios";
 import Link from "next/link";
 import InputGroup from "../components/InputGroup";
 
@@ -10,7 +11,23 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<any>({});
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+
+    try {
+      const res = await axios.post(
+        "/auth/login",
+        {
+          username,
+          password,
+        },
+        { withCredentials: true }
+      );
+    } catch (error: any) {
+      console.log(error);
+      setErrors(error?.response?.data || {});
+    }
+  };
 
   return (
     <div className="bg-white">
@@ -35,7 +52,7 @@ const Login = () => {
             </button>
           </form>
           <small>
-            1초만에 회원가입!
+            1초만에 회원가입!!!
             <Link className="ml-2 text-blue-500 uppercase" href="/register">
               회원가입
             </Link>
@@ -45,3 +62,5 @@ const Login = () => {
     </div>
   );
 };
+
+export default Login;

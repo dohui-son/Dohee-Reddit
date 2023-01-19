@@ -15,18 +15,17 @@ const Register = () => {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault(); // onSubmit 이벤트가 일어났을때 refrsh 되는것 방지
-
-    const res = await axios.post("/auth/register", {
-      email,
-      password,
-      username,
-    });
     try {
+      const res = await axios.post("/auth/register", {
+        email,
+        password,
+        username,
+      });
       console.log("res", res);
-      router.push("/login");
+      //router.push("/login");
     } catch (error: any) {
       console.log(error);
-      setErrors(error.response.data || {});
+      setErrors(error?.response?.data || {});
     }
   };
 

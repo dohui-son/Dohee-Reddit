@@ -15,7 +15,7 @@ const mapError = (errors: Object[]) => {
   }, {});
 };
 
-const me = async (res: Response) => {
+const me = async (_: Request, res: Response) => {
   return res.json(res.locals.user);
 };
 
@@ -91,13 +91,13 @@ const login = async (req: Request, res: Response) => {
     }
 
     // token생성
-    const token = jwt.sign({ user }, process.env.JWT_SECRET);
+    const token = jwt.sign({ username }, process.env.JWT_SECRET);
     // 쿠키 저장
     res.set(
       "Set-Cookie",
       cookie.serialize("token", token, {
         httpOnly: true,
-        maxAge: 60 * 60 * 24 * 1,
+        maxAge: 60 * 60 * 24 * 2,
         path: "/",
       })
     );

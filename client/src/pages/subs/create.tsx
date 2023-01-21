@@ -91,7 +91,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     // 백엔드에서 받은 쿠키로 인증 처리시 에러가 나면 login 페이지로 이동
   } catch (error) {
     console.log(error);
-    res.writeHead(307, { Location: "/login" }).end();
+    res.writeHead(307, { Location: "/login" }).end(); // HTTP 307 : Temporary Redirect
     return { props: {} };
   }
 };

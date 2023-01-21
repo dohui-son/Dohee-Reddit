@@ -3,7 +3,7 @@ import React, { FormEvent, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import InputGroup from "../components/InputGroup";
-import { useAuthDispatch } from "../context/auth";
+import { useAuthDispatch, useAuthState } from "../context/auth";
 
 const Login = () => {
   let router = useRouter();
@@ -13,19 +13,18 @@ const Login = () => {
   const [errors, setErrors] = useState<any>({});
 
   const dispatch = useAuthDispatch();
+  const { authenticated } = useAuthState();
+
+  if (authenticated) router.push("/"); // 이미 로그인한 상태면 메인으로 이동
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     try {
-      const res = await axios.post(
-        "/auth/login",
-        {
-          username,
-          password,
-        },
-        { withCredentials: true }
-      );
+      const res = await axios.post("/auth/login", {
+        username,
+        password,
+      });
 
       dispatch("LOGIN", res.data?.user);
       router.push("/");

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import InputGroup from "../components/InputGroup";
+import { useAuthState } from "../context/auth";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -12,6 +13,9 @@ const Register = () => {
   const [errors, setErrors] = useState<any>({}); // any type 추가
 
   let router = useRouter();
+  const { authenticated } = useAuthState();
+
+  if (authenticated) router.push("/");
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault(); // onSubmit 이벤트가 일어났을때 refrsh 되는것 방지

@@ -4,7 +4,8 @@ import Sub from "../entities/Sub";
 import userMiddleware from "../middlewares/user";
 import authMiddleware from "../middlewares/auth";
 import { isEmpty, validate } from "class-validator";
-import { getRepository, UpdateQueryBuilder } from "typeorm";
+import { UpdateQueryBuilder } from "typeorm";
+import { AppDataSource } from "../data-source";
 
 const createSub = async (req: Request, res: Response, next) => {
   const { name, title, description } = req.body;
@@ -16,7 +17,7 @@ const createSub = async (req: Request, res: Response, next) => {
     if (isEmpty(title)) errors.title = "커뮤니티 주제는 비워둘 수 없습니다.";
 
     // 커뮤니티 이름 중복 검사 - queryBuilder 사용
-    const sub = await getRepository(Sub)
+    const sub = await AppDataSource.getRepository(Sub)
       .createQueryBuilder("sub")
       .where("lower(sub.name) = :name", { name: name.toLowerCase() })
       .getOne();

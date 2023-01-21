@@ -7,6 +7,7 @@ import cookie from "cookie";
 import User from "../entities/User";
 import userMiddleware from "../middlewares/user";
 import authMiddleware from "../middlewares/auth";
+import { strict } from "assert";
 
 const mapError = (errors: Object[]) => {
   return errors.reduce((prev: any, err: any) => {
@@ -109,10 +110,24 @@ const login = async (req: Request, res: Response) => {
   }
 };
 
-const router = Router();
+const logout = async (_: Request, res: Response) => {
+  res.set(
+    "Set-Cookie",
+    cookie.serialize("token", "", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      expires: new Date(0),
+      path: "/",
+    })
+  );
+  res.status(200).json({ success: true });
+};
 
+const router = Router();
 router.get("/me", userMiddleware, authMiddleware, me);
 router.post("/register", register);
 router.post("/login", login);
+router.post("/logout", userMiddleware, authMiddleware, logout);
 
 export default router;

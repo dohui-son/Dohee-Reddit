@@ -11,9 +11,8 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<any>({});
-
-  const dispatch = useAuthDispatch();
   const { authenticated } = useAuthState();
+  const dispatch = useAuthDispatch();
 
   if (authenticated) router.push("/"); // 이미 로그인한 상태면 메인으로 이동
 
@@ -22,11 +21,12 @@ const Login = () => {
 
     try {
       const res = await axios.post("/auth/login", {
-        username,
         password,
+        username,
       });
 
       dispatch("LOGIN", res.data?.user);
+
       router.push("/");
     } catch (error: any) {
       console.log(error);

@@ -3,8 +3,9 @@ import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
+import type { NextPage } from "next";
 
-export default function Home() {
+const Home: NextPage = () => {
   return (
     <div className="flex max-w-5xl px-4 pt-5 mx-auto">
       <div className="w-full md:mr-3 md:w-8/12">포스트리스트</div>
@@ -30,4 +31,4 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};

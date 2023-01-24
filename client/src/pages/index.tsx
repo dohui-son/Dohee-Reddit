@@ -4,11 +4,22 @@ import { Inter } from "@next/font/google";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import type { NextPage } from "next";
+import { Sub } from "../types";
+import useSWR from "swr";
+import axios from "axios";
 
 const Home: NextPage = () => {
+  const fetcher = async (url: string) => {
+    return await axios.get(url).then((res) => res.data);
+  };
+  const address = "http://localhost:4000/api/subs/sub/topSubs";
+  const { data: topSubs } = useSWR<Sub[]>(address, fetcher);
+  console.log(topSubs);
+
   return (
     <div className="flex max-w-5xl px-4 pt-5 mx-auto">
-      <div className="w-full md:mr-3 md:w-8/12">포스트리스트</div>
+      {/* 포스트리스트 */}
+      <div className="w-full md:mr-3 md:w-8/12"> </div>
 
       {/* 사이드바 */}
       <div className="hidden w-4/12 ml-3 md:block">
@@ -32,3 +43,5 @@ const Home: NextPage = () => {
     </div>
   );
 };
+
+export default Home;

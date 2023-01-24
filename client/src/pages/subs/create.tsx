@@ -12,6 +12,7 @@ const SubCreate = () => {
 
   let router = useRouter();
 
+  //Todo: create subs failed with Status 500
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
@@ -20,8 +21,8 @@ const SubCreate = () => {
 
       router.push(`/r/${res.data.name}`);
     } catch (error: any) {
-      console.log(error);
-      setErrors(error.response.data);
+      console.log("CREATE ERROR", error);
+      setErrors(error.data);
     }
   };
 

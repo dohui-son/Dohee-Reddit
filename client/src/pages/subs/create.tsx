@@ -7,7 +7,7 @@ import InputGroup from "../../components/InputGroup";
 const SubCreate = () => {
   const [name, setName] = useState("");
   const [title, setTitle] = useState("");
-  const [decription, setDescription] = useState("");
+  const [description, setDescription] = useState("");
   const [errors, setErrors] = useState<any>({});
 
   let router = useRouter();
@@ -17,12 +17,13 @@ const SubCreate = () => {
     event.preventDefault();
 
     try {
-      const res = await axios.post("/subs", { name, title, decription });
+      const res = await axios.post("/subs", { name, title, description });
 
       router.push(`/r/${res.data.name}`);
+      alert("커뮤니티를 생성했습니다.");
     } catch (error: any) {
       console.log("CREATE ERROR", error);
-      setErrors(error.data);
+      setErrors(error.response.data);
     }
   };
 
@@ -63,7 +64,7 @@ const SubCreate = () => {
             </p>
             <InputGroup
               placeholder="Description"
-              value={decription}
+              value={description}
               setValue={setDescription}
               error={errors.description}
             />

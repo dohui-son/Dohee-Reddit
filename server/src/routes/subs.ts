@@ -8,7 +8,7 @@ import { isEmpty, validate } from "class-validator";
 import { UpdateQueryBuilder } from "typeorm";
 import { AppDataSource } from "../data-source";
 
-const createSub = async (req: Request, res: Response, next) => {
+const createSub = async (req: Request, res: Response) => {
   const { name, title, description } = req.body;
 
   try {
@@ -36,8 +36,10 @@ const createSub = async (req: Request, res: Response, next) => {
     // sub(커뮤니티) instance 생성 및 bd에 저장
     const sub = new Sub();
     sub.name = name;
+    sub.title = title;
     sub.description = description;
     sub.user = user;
+
     await sub.save();
 
     return res.json(sub); // 완료후 fe로 전달

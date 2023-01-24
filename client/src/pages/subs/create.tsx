@@ -20,7 +20,7 @@ const SubCreate = () => {
       const res = await axios.post("/subs", { name, title, description });
 
       router.push(`/r/${res.data.name}`);
-      alert("커뮤니티를 생성했습니다.");
+      alert("커뮤니티를 생성했습니다."); //Todo: 이 임시 alert 삭제
     } catch (error: any) {
       console.log("CREATE ERROR", error);
       setErrors(error.response.data);

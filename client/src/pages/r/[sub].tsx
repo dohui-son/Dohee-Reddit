@@ -10,6 +10,7 @@ const SubPage = () => {
   const fetcher = async (url: string) => {
     try {
       const res = await axios.get(url);
+      console.log(res);
       return res.data;
     } catch (error: any) {
       throw error.response.data;
@@ -17,7 +18,7 @@ const SubPage = () => {
   };
 
   const { data: sub, error } = useSWR(
-    subName ? `/sub/${subName}` : null,
+    subName ? `/subs/${subName}` : null,
     fetcher
   );
 

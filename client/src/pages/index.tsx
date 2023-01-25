@@ -7,6 +7,7 @@ import type { NextPage } from "next";
 import { Sub } from "../types";
 import useSWR from "swr";
 import axios from "axios";
+import { useAuthState } from "../context/auth";
 
 const Home: NextPage = () => {
   const fetcher = async (url: string) => {
@@ -14,7 +15,7 @@ const Home: NextPage = () => {
   };
   const address = "http://localhost:4000/api/subs/sub/topSubs";
   const { data: topSubs } = useSWR<Sub[]>(address, fetcher);
-  console.log(topSubs);
+  const { authenticated } = useAuthState();
 
   return (
     <div className="flex max-w-5xl px-4 pt-5 mx-auto">
@@ -56,13 +57,14 @@ const Home: NextPage = () => {
           </div>
 
           <div className="w-full py-6 text-center">
-            <Link
-              href="/subs/create"
-              className="w-full p-2 text-center text-white bg-gray-400 rounded"
-            >
-              {/* Todo: 커뮤니티 생성 페이지 이동시 로그인 상태에 따라 페이지 이동 */}
-              커뮤니티 만들기
-            </Link>
+            {authenticated && (
+              <Link
+                href="/subs/create"
+                className="w-full p-2 text-center text-white bg-gray-400 rounded"
+              >
+                커뮤니티 만들기
+              </Link>
+            )}
           </div>
         </div>
       </div>

@@ -50,6 +50,7 @@ const Home: NextPage = () => {
                   {/* Todo: 해야할일 */}
                   {sub.name}
                 </Link>
+                <p className="ml-auto font-med">{sub.postCount}</p>
               </div>
             ))}
           </div>
@@ -59,6 +60,7 @@ const Home: NextPage = () => {
               href="/subs/create"
               className="w-full p-2 text-center text-white bg-gray-400 rounded"
             >
+              {/* Todo: 커뮤니티 생성 페이지 이동시 로그인 상태에 따라 페이지 이동 */}
               커뮤니티 만들기
             </Link>
           </div>

@@ -20,10 +20,12 @@ const createPost = async (req: Request, res: Response) => {
 
   try {
     const subRecord = await Sub.findOneByOrFail({ name: sub });
+    console.log("성공");
     const post = new Post();
     post.title = title;
     post.body = body;
     post.user = user;
+    console.log(user);
     post.sub = subRecord;
 
     await post.save();

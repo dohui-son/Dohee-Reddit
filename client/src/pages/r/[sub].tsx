@@ -1,13 +1,16 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import React, { Fragment } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import useSWR from "swr";
-import { clearScreenDown } from "readline";
+import { useAuthState } from "@/src/context/auth";
 
 const SubPage = () => {
   const router = useRouter();
   const subName = router.query.sub;
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { authenticated, user } = useAuthState();
+  const [ownSub, setOwnSub] = useState(false);
 
   const fetcher = async (url: string) => {
     try {
@@ -24,11 +27,35 @@ const SubPage = () => {
     fetcher
   );
 
+  useEffect(() => {
+    //
+    if (!sub || !user) return;
+    setOwnSub(authenticated && user.username === sub.username);
+  }, [sub]);
+
+  const openFileInput = (type: string) => {
+    if (!ownSub) return; // 내가 생성한 커뮤니티가 아니면 배머 및 프로필 이미지 변경 불가
+
+    const fileInput = fileInputRef.current;
+    if (fileInput) {
+      fileInput.name = type; // type: "banner" or "image"
+      fileInput.click();
+    }
+  };
+
+  const uploadImage = () => {};
+
   return (
     <>
       {sub && (
         <>
           <div>
+            <input
+              type="file"
+              hidden={true}
+              ref={fileInputRef}
+              onChange={uploadImage}
+            />
             {/* 배너이미지 */}
             <div className="bg-gray-200">
               {sub.bannerUrl ? (
@@ -40,9 +67,13 @@ const SubPage = () => {
                     backgroundSize: `cover`,
                     backgroundPosition: `center`,
                   }}
+                  onClick={() => openFileInput("banner")}
                 ></div>
               ) : (
-                <div className="h-20 bg-gray-200"></div>
+                <div
+                  className="h-20 bg-gray-200"
+                  onClick={() => openFileInput("banner")}
+                ></div>
               )}
             </div>
             {/* 커뮤니티 메타 데이터 */}
@@ -56,12 +87,15 @@ const SubPage = () => {
                       width={70}
                       height={70}
                       className="rounded-full"
+                      onClick={() => openFileInput("image")}
                     />
                   )}
                 </div>
                 <div className="pt-1 pl-24">
                   <div className="flex items-center">
-                    <h1 className="text-3xl font-bold">{sub.title}</h1>
+                    <h1 className="text-3xl font-bold text-gray-500">
+                      {sub.title}
+                    </h1>
                   </div>
                   <p className="text-small font-bold text-gray-400">
                     {sub.name}

@@ -28,7 +28,6 @@ const SubPage = () => {
   );
 
   useEffect(() => {
-    //
     if (!sub || !user) return;
     setOwnSub(authenticated && user.username === sub.username);
   }, [sub]);

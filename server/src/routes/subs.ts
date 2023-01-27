@@ -7,6 +7,10 @@ import authMiddleware from "../middlewares/auth";
 import { isEmpty, validate } from "class-validator";
 import { UpdateQueryBuilder } from "typeorm";
 import { AppDataSource } from "../data-source";
+import multer from "multer";
+import { makeId } from "../utils/helpers";
+import path from "path";
+import { FileFilterCallback } from "multer";
 
 const getSub = async (req: Request, res: Response) => {
   const name = req.params.name;
@@ -93,7 +97,7 @@ const topSubs = async (_: Request, res: Response) => {
   }
 };
 
-//about: Banner of Profile Image
+//[Banner or Profile Image UPLOAD]
 const ownSub = async (req: Request, res: Response, next: NextFunction) => {
   const user: User = res.locals.user;
 
@@ -114,19 +118,38 @@ const ownSub = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: "public/images",
+    filename: (_, file, callback) => {
+      const name = makeId(15);
+      callback(null, name + path.extname(file.originalname));
+    },
+  }),
+  fileFilter: (_, file: any, callback: FileFilterCallback) => {
+    if (file.mimetype == "image/jpeg" || file.mimetype == "image/png") {
+      callback(null, true);
+    } else {
+      callback(
+        new Error("이미지 파일이 아닙니다. png나 jpeg 파일을 입력하세요.")
+      );
+    }
+  },
+});
+
 const router = Router();
 
 router.get("/:name", userMiddleware, getSub);
 router.post("/", userMiddleware, authMiddleware, createSub);
 router.get("/sub/topSubs", topSubs);
 //about: Banner of Profile Image
-// router.post(
-//   "/:name/upload",
-//   userMiddleware,
-//   authMiddleware,
-//   ownSub,
-//   upload.single("file"),
-//   uploadSubImage
-// );
+router.post(
+  "/:name/upload",
+  userMiddleware,
+  authMiddleware,
+  ownSub,
+  upload.single("file"),
+  uploadSubImage
+);
 
 export default router;

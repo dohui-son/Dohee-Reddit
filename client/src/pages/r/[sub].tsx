@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import React, { Fragment } from "react";
 import Image from "next/image";
 import useSWR from "swr";
+import { clearScreenDown } from "readline";
 
 const SubPage = () => {
   const router = useRouter();
@@ -22,8 +23,6 @@ const SubPage = () => {
     subName ? `/subs/${subName}` : null,
     fetcher
   );
-
-  console.log(sub);
 
   return (
     <>
@@ -45,27 +44,28 @@ const SubPage = () => {
               ) : (
                 <div className="h-20 bg-gray-200"></div>
               )}
-              <div className="h-20 bg-white-200">
-                <div className="relative flex max-w-5xl px-5 mx-auto">
-                  <div className="absolute" style={{ top: -15 }}>
-                    {sub.imageUrl && (
-                      <Image
-                        src={sub.imageUrl}
-                        alt="community image"
-                        width={70}
-                        height={70}
-                        className="rounded-full"
-                      />
-                    )}
+            </div>
+            {/* 커뮤니티 메타 데이터 */}
+            <div className="h-20 bg-white-200">
+              <div className="relative flex max-w-5xl px-5 mx-auto">
+                <div className="absolute" style={{ top: -35 }}>
+                  {sub.imageUrl && (
+                    <Image
+                      src={sub.imageUrl}
+                      alt="community image"
+                      width={70}
+                      height={70}
+                      className="rounded-full"
+                    />
+                  )}
+                </div>
+                <div className="pt-1 pl-24">
+                  <div className="flex items-center">
+                    <h1 className="text-3xl font-bold">{sub.title}</h1>
                   </div>
-                  <div className="pt-1 pl-24">
-                    <div className="flex items-center">
-                      <h1 className="text-3xl font-bold">{sub.title}</h1>
-                    </div>
-                    <p className="text-small font-bold text-gray-400">
-                      {sub.name}
-                    </p>
-                  </div>
+                  <p className="text-small font-bold text-gray-400">
+                    {sub.name}
+                  </p>
                 </div>
               </div>
             </div>

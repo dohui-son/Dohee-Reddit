@@ -12,21 +12,7 @@ const SubPage = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { authenticated, user } = useAuthState();
   const [ownSub, setOwnSub] = useState(false);
-
-  const fetcher = async (url: string) => {
-    try {
-      const res = await axios.get(url);
-
-      return res.data;
-    } catch (error: any) {
-      throw error.response.data;
-    }
-  };
-
-  const { data: sub, error } = useSWR(
-    subName ? `/subs/${subName}` : null,
-    fetcher
-  );
+  const { data: sub, error } = useSWR(subName ? `/subs/${subName}` : null);
 
   useEffect(() => {
     if (!sub || !user) return;
@@ -42,7 +28,6 @@ const SubPage = () => {
       fileInput.click();
     }
   };
-
   const uploadImage = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files === null || !fileInputRef.current) return;
 

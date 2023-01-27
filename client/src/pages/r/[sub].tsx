@@ -4,6 +4,7 @@ import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import useSWR from "swr";
 import { useAuthState } from "@/src/context/auth";
+import SideBar from "@/src/components/SideBar";
 
 const SubPage = () => {
   const router = useRouter();
@@ -113,12 +114,15 @@ const SubPage = () => {
                       {sub.title}
                     </h1>
                   </div>
-                  <p className="text-small font-bold text-gray-400">
-                    {sub.name}
-                  </p>
+                  <p className="text-sm font-bold text-gray-400">{sub.name}</p>
                 </div>
               </div>
             </div>
+          </div>
+          {/* Todo: posts and sidebar */}
+          <div className="flex max-w-5xl px-4 pt-5 mx-auto">
+            <div className="w-full md:mr-3 md:w-10/12"></div>
+            <SideBar sub={sub} />
           </div>
         </>
       )}

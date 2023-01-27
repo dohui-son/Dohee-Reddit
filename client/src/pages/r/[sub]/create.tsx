@@ -1,6 +1,10 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import { GetServerSideProps } from "next";
 
 const PostCreate = () => {
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
   return (
     <div className="flex flex-col justify-center pt-16">
       <div className="w-6/12 mx-auto md:w-100">
@@ -38,3 +42,16 @@ const PostCreate = () => {
   );
 };
 export default PostCreate;
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  try {
+    const cookie = req.headers.cookie;
+    if (!cookie) throw new Error("쿠키가 없습니다.");
+
+    await axios.get("/auth/me", { headers: { cookie } });
+    return { props: {} };
+  } catch (error) {
+    res.writeHead(307, { Location: "/login" }).end();
+    return { props: {} };
+  }
+};

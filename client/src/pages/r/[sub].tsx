@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import React, { useEffect, useRef, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import useSWR from "swr";
 import { useAuthState } from "@/src/context/auth";
@@ -43,7 +43,24 @@ const SubPage = () => {
     }
   };
 
-  const uploadImage = () => {};
+  const uploadImage = async (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files === null || !fileInputRef.current) return;
+
+    const file = event.target.files[0];
+    console.log("file ", file);
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("type", fileInputRef.current.name);
+
+    try {
+      await axios.post(`/subs/${sub.name}/upload`, formData, {
+        headers: { "Context-Type": "multipart/form-data" },
+      });
+    } catch (error) {
+      console.log("uploadImage ERROR", error);
+    }
+  };
 
   return (
     <>

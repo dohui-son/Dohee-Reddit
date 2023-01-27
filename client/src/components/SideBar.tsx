@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import Link from "next/link";
 import React from "react";
 import { useAuthState } from "../context/auth";
@@ -23,8 +24,8 @@ const SideBar = ({ sub }: Props) => {
             </div>
           </div>
           <p className="my-3">
-            {sub?.createdAt}
             <i className="mr-2 fas fa-birthday-cake"></i>
+            {dayjs(sub?.createdAt).format("D MMM YYYY")}
           </p>
           {authenticated && (
             <div className="mx-0 my-2">

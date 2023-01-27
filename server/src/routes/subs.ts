@@ -11,6 +11,7 @@ import multer from "multer";
 import { makeId } from "../utils/helpers";
 import path from "path";
 import { FileFilterCallback } from "multer";
+import { unlinkSync } from "fs";
 
 const getSub = async (req: Request, res: Response) => {
   const name = req.params.name;
@@ -137,11 +138,60 @@ const upload = multer({
   },
 });
 
+const uploadSubImage = async (req: Request, res: Response) => {
+  const sub: Sub = res.locals.sub;
+
+  try {
+    const type = req.body.type;
+
+    // [File Validity Check] 파일 유형 지정이 안되었을 경우 업로드된 파일 삭제
+    if (type !== "image" && type !== "banner") {
+      if (!req.file?.path) {
+        return res.status(400).json({ error: "유효하지 않은 파일" });
+      }
+
+      unlinkSync(req.file.path);
+      return res.status(400).json({ error: "잘못된 유형" });
+    }
+
+    let oldImageUrn: string = "";
+    if (type === "image") {
+      oldImageUrn = sub.imageUrn || "";
+      sub.imageUrn = req.file?.filename || "";
+    } else if (type === "banner") {
+      oldImageUrn = sub.bannerUrn || "";
+      sub.bannerUrn = req.file?.filename || "";
+    }
+    await sub.save();
+
+    // 사용하지 않는 이미지 파일 삭제
+    if (oldImageUrn !== "") {
+      // full 경로 만들기
+      const fullFileName = path.resolve(
+        process.cwd(),
+        "public",
+        "images",
+        oldImageUrn
+      );
+      unlinkSync(fullFileName);
+    }
+
+    return res.json(sub);
+  } catch (error) {
+    console.log(error);
+
+    return res
+      .status(500)
+      .json({ error: "Something went wrong with saving image file" });
+  }
+};
+
 const router = Router();
 
 router.get("/:name", userMiddleware, getSub);
 router.post("/", userMiddleware, authMiddleware, createSub);
 router.get("/sub/topSubs", topSubs);
+
 //about: Banner of Profile Image
 router.post(
   "/:name/upload",

@@ -13,7 +13,7 @@ const PostCreate = () => {
   const submitPost = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (title.trim() === "" || !subName) return;
+    if (title.trim() === "" || !subName || body.trim() === "") return;
 
     try {
       const { data: post } = await axios.post<Post>("/posts", {

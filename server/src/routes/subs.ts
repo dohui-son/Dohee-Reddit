@@ -5,7 +5,7 @@ import Post from "../entities/Post";
 import userMiddleware from "../middlewares/user";
 import authMiddleware from "../middlewares/auth";
 import { isEmpty, validate } from "class-validator";
-import { UpdateQueryBuilder } from "typeorm";
+import { SimpleConsoleLogger, UpdateQueryBuilder } from "typeorm";
 import { AppDataSource } from "../data-source";
 import multer from "multer";
 import { makeId } from "../utils/helpers";
@@ -19,16 +19,21 @@ const getSub = async (req: Request, res: Response) => {
   try {
     const sub = await Sub.findOneByOrFail({ name });
 
-    // const posts = await Post.find({
-    //   where: { sub },
-    //   order: { createdAt: "DESC" },
-    //   relations: ["comments", "votes"],
-    // });
+    // 포스트 생성 후 해당 sub에 속하는 포스트 정보 넣어주기
+    const posts = await Post.find({
+      where: { subName: sub.name },
+      order: { createdAt: "DESC" },
+      relations: ["comments", "votes"],
+    });
 
-    // sub.posts = posts;
-    // if (res.locals.user) {
-    //   sub.posts.forEach((p) => p.setUserVote(res.locals.user));
-    // }
+    sub.posts = posts;
+
+    // post 투표
+    if (res.locals.user) {
+      sub.posts.forEach((p) => p.setUserVote(res.locals.user));
+    }
+
+    console.log("SUB ", sub);
 
     return res.json(sub);
   } catch (error) {

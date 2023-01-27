@@ -20,7 +20,7 @@ const PostPage = () => {
 
   const { data: post, error } = useSWR<Post>(
     identifier && slug ? `/posts/${identifier}/${slug}` : null
-    // fetcher
+    // fetcher : _app 에서 SWRConfig로 fetcher를 처리해줬기때문에 모든 컴포넌트의 useSWR에 fetcher 넣어주지 않아도 됨
   );
 
   return <div>POST PAGE</div>;

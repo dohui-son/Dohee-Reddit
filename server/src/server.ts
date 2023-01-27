@@ -19,6 +19,7 @@ app.use(
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cookieParser()); // Backend(cookie parser 필요) <--> Frontend(withCredentials true)
+app.use(express.static("public"));
 
 dotenv.config(); // 환경변수 사용하기
 

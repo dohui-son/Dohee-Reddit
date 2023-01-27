@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { instanceToPlain } from "class-transformer";
 
 export default abstract class Entity extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -14,4 +15,8 @@ export default abstract class Entity extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  toJSON() {
+    return instanceToPlain(this); // info: to deliver img url in proper way with class-trasformer library
+  }
 }

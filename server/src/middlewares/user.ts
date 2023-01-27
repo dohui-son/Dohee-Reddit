@@ -11,7 +11,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     const user = await User.findOneBy({ username });
     if (!user) throw new Error("Unauthenticated");
 
-    res.locals.user = user; // 유저 정보는 res.local.user에서 넣어줌
+    res.locals.user = user; // 유저 정보는 res.local.user에서 넣어줌 ( usage ex. const user: User = res.locals.user; )
     return next();
   } catch (error) {
     console.log(error);

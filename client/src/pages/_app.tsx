@@ -6,7 +6,6 @@ import { AuthProvider } from "../context/auth";
 import { useRouter } from "next/router";
 import NavBar from "../components/NavBar";
 import { SWRConfig } from "swr";
-import axios from "axios";
 
 export default function App({ Component, pageProps }: AppProps) {
   Axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL + "/api"; // NEXT_PUBLIC_SERVER_BASE_URL는 NEXT JS 환경변수
@@ -19,7 +18,7 @@ export default function App({ Component, pageProps }: AppProps) {
   // 컴포넌트당 일일이 fetcher 작성할 필요 없음
   const fetcher = async (url: string) => {
     try {
-      const res = await axios.get(url);
+      const res = await Axios.get(url);
       return res.data;
     } catch (error: any) {
       throw error.response.data;

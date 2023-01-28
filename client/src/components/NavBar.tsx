@@ -26,7 +26,7 @@ const NavBar: React.FC = () => {
 
       <div className="max-w-full px-4">
         <div className="relative flex items-center bg-gray-100 border rounded hover:border-gray-700 hover:bg-white">
-          <i className="pl-4 pr-3 text-gray-400 fas fa-search"></i>
+          {/* <i className="pl-4 pr-3 text-gray-400 fas fa-search">Todo</i> */}
           <input
             type="text"
             placeholder="Search"

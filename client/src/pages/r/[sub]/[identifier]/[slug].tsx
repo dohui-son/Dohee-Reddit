@@ -52,8 +52,10 @@ const PostPage = () => {
                   <p className="my-3 text-sm">{post.body}</p>
                   <div className="flex">
                     <button>
-                      <i className="mr-1 fas fa-comment-alt fa-xs">임시버튼</i>
-                      <span className="font-bold">{post.commentCount}</span>
+                      <i className="mr-1 fas fa-comment-alt fa-xs"></i>
+                      <span className="font-bold">
+                        Comments{post.commentCount}
+                      </span>
                     </button>
                   </div>
                 </div>

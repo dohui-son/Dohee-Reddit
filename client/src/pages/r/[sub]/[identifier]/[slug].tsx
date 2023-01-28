@@ -14,6 +14,9 @@ const PostPage = () => {
   const { identifier, sub, slug } = router.query;
   const [newComment, setNewComment] = useState("");
 
+  // Todo: Comment 생성 및 서버 comment api
+  const submitComment = () => {};
+
   //   const fetcher = async (url: string) => {
   //     try {
   //       const res = await axios.get(url);
@@ -63,7 +66,7 @@ const PostPage = () => {
                 </div>
               </div>
 
-              <div className="pl-10 pr-6 mb-4">
+              <div className="pr-6 mb-4">
                 {authenticated ? (
                   <div>
                     <p className="mb-1 text-xs">

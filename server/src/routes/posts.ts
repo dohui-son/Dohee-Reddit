@@ -4,7 +4,7 @@ import authMiddleware from "../middlewares/auth";
 import Sub from "../entities/Sub";
 import Post from "../entities/Post";
 
-const getPost = async (res: Response, req: Request) => {
+const getPost = async (req: Request, res: Response) => {
   const { identifier, slug } = req.params;
 
   try {
@@ -42,12 +42,10 @@ const createPost = async (req: Request, res: Response) => {
 
   try {
     const subRecord = await Sub.findOneByOrFail({ name: sub });
-    console.log("성공");
     const post = new Post();
     post.title = title;
     post.body = body;
     post.user = user;
-    console.log(user);
     post.sub = subRecord;
 
     await post.save();

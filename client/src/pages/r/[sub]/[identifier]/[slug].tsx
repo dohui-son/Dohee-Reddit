@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import useSWR from "swr";
 
-import { Post } from "@/src/types";
+import { Post, Comment } from "@/src/types";
 import Link from "next/link";
 import dayjs from "dayjs";
 import { useAuthState } from "@/src/context/auth";
@@ -124,6 +124,28 @@ const PostPage = () => {
                   </div>
                 )}
               </div>
+              {/* comment list */}
+              {comments?.map((comment) => (
+                <div className="flex" key={comment.identifier}>
+                  <div className="py-2 pr-2">
+                    <p className="mb-1 text-xs leading-none">
+                      <Link
+                        href={`/u/${comment.username}`}
+                        className="mr-1 font-bold text-gray-400 hover:underline"
+                      >
+                        {comment.username}
+                      </Link>
+                      <span className="text-gray-300">
+                        {`${comment.voteScore} 
+                        posts
+                        ${dayjs(comment.createdAt).format("YYY-MM-DD HH:mm")}
+                        `}
+                      </span>
+                    </p>
+                    <p>{comment.body}</p>
+                  </div>
+                </div>
+              ))}
             </>
           )}
         </div>

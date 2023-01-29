@@ -13,6 +13,13 @@ const PostPage = () => {
   const router = useRouter();
   const { identifier, sub, slug } = router.query;
   const [newComment, setNewComment] = useState("");
+  //NOTE: fetcher - _app 에서 SWRConfig로 fetcher를 처리해줬기때문에 모든 컴포넌트의 useSWR에 fetcher 넣어주지 않아도 됨
+  const { data: post, error } = useSWR<Post>(
+    identifier && slug ? `/posts/${identifier}/${slug}` : null
+  );
+  const { data: comments } = useSWR<Comment[]>(
+    identifier && slug ? `/posts/${identifier}/${slug}/comments` : null
+  );
 
   //NOTE: fetcher - _app 에서 SWRConfig로 fetcher를 처리해줬기때문에 모든 컴포넌트의 useSWR에 fetcher 넣어주지 않아도 됨
   //   const fetcher = async (url: string) => {
@@ -23,11 +30,6 @@ const PostPage = () => {
   //       throw error.response.data;
   //     }
   //   };
-
-  const { data: post, error } = useSWR<Post>(
-    identifier && slug ? `/posts/${identifier}/${slug}` : null
-    //NOTE: fetcher - _app 에서 SWRConfig로 fetcher를 처리해줬기때문에 모든 컴포넌트의 useSWR에 fetcher 넣어주지 않아도 됨
-  );
 
   // [Comment - create]: 댓글 작성
   const handleSubmit = async (event: FormEvent) => {

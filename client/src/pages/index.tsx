@@ -4,10 +4,11 @@ import { Inter } from "@next/font/google";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import type { NextPage } from "next";
-import { Sub } from "../types";
+import { Sub, Post } from "../types";
 import useSWR from "swr";
 import axios from "axios";
 import { useAuthState } from "../context/auth";
+import useSWRInfinite from "swr/infinite";
 
 const Home: NextPage = () => {
   const fetcher = async (url: string) => {
@@ -16,6 +17,20 @@ const Home: NextPage = () => {
   const address = "http://localhost:4000/api/subs/sub/topSubs";
   const { data: topSubs } = useSWR<Sub[]>(address, fetcher);
   const { authenticated } = useAuthState();
+
+  // [Infinite Scroll]
+  const getKey = (pageIndex: number, previousPageData: Post[]) => {
+    if (previousPageData && !previousPageData.length) return null;
+    return `/posts?page=${pageIndex}`;
+  };
+  const {
+    data,
+    error,
+    size: page,
+    setSize: setPage,
+    isValidating,
+    mutate,
+  } = useSWRInfinite<Post[]>(getKey);
 
   return (
     <div className="flex max-w-5xl px-4 pt-5 mx-auto">

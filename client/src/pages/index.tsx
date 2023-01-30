@@ -74,7 +74,7 @@ const Home: NextPage = () => {
         {" "}
         {isInitialLoading && <p className="text-lg text-center"> LOADING...</p>}
         {posts?.map((post) => (
-          <PostCard key={post.identifier} post={post} />
+          <PostCard key={post.identifier} post={post} subMutate={mutate} />
         ))}
       </div>
 

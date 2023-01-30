@@ -110,7 +110,7 @@ const getPostComments = async (req: Request, res: Response) => {
 // [Infinite Scroll]
 const getPosts = async (req: Request, res: Response) => {
   const currentPage: number = (req.query.page || 0) as number;
-  const perPage: number = (req.query.page || 8) as number;
+  const perPage: number = (req.query.count || 8) as number;
 
   try {
     const posts = await Post.find({
@@ -123,6 +123,7 @@ const getPosts = async (req: Request, res: Response) => {
     if (res.locals.user) {
       posts.forEach((p) => p.setUserVote(res.locals.user));
     }
+    return res.json(posts);
   } catch (error) {
     console.log(error);
     return res

@@ -7,6 +7,7 @@ import { Post, Comment } from "@/src/types";
 import Link from "next/link";
 import dayjs from "dayjs";
 import { useAuthState } from "@/src/context/auth";
+import classNames from "classnames";
 
 const PostPage = () => {
   const { authenticated, user } = useAuthState();
@@ -51,6 +52,29 @@ const PostPage = () => {
     }
   };
 
+  const vote = async (value: number, comment?: Comment) => {
+    if (!authenticated) router.push("/login");
+
+    // 이미 클릭한 vote를 다시 누른 경우: reset
+    if (
+      (!comment && value === post?.userVote) ||
+      (comment && comment.userVote === value)
+    ) {
+      value = 0;
+    }
+
+    try {
+      await axios.post("/votes", {
+        identifier,
+        slug,
+        commentIdentifier: comment?.identifier,
+        value,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="flex max-w-5xl px-4 pt-5 mx-auto">
       <div className="w-full md:mr-3 md:w-9/12">
@@ -58,6 +82,30 @@ const PostPage = () => {
           {post && (
             <>
               <div className="flex">
+                {/* Good Bad */}
+                <div className="flex-shrink-0 w-10 py-2 text-center rounded-l">
+                  <div
+                    className={classNames(
+                      "w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500",
+                      { "bg-blue-300": post.userVote === 1 }
+                    )}
+                    onClick={() => vote(1)}
+                  >
+                    😄
+                  </div>
+                  <p className="text-xs font-bold text-gray-400">
+                    {post.voteScore}
+                  </p>
+                  <div
+                    className={classNames(
+                      "w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500",
+                      { "bg-red-300": post.userVote === -1 }
+                    )}
+                    onClick={() => vote(-1)}
+                  >
+                    😢
+                  </div>
+                </div>
                 <div className="py-2 pr-2">
                   <div className="flex items-center">
                     <p className="text-xs test-gray-400">
@@ -128,6 +176,33 @@ const PostPage = () => {
               {/* comment list */}
               {comments?.map((comment) => (
                 <div className="flex" key={comment.identifier}>
+                  {/* good bad */}
+                  <div className="flex-shrink-0 w-10 py-2 text-center rounded-l">
+                    <div
+                      className="w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-blue-500"
+                      onClick={() => vote(1)}
+                    >
+                      <i
+                        className={classNames("fas fa-arrow-up", {
+                          "text-blue-500": comment.userVote === 1,
+                        })}
+                      ></i>
+                    </div>
+                    <p className="text-xs font-bold text-gray-400">
+                      {comment.voteScore}
+                    </p>
+                    <div
+                      className="w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500"
+                      onClick={() => vote(-1)}
+                    >
+                      <i
+                        className={classNames("fas fa-arrow-down", {
+                          "text-red-500": comment.userVote === 1,
+                        })}
+                      ></i>
+                    </div>
+                  </div>
+
                   <div className="py-2 pr-2">
                     <p className="mb-1 text-xs leading-none">
                       <Link

@@ -46,6 +46,7 @@ const SubPage = () => {
         headers: { "Context-Type": "multipart/form-data" },
       });
       mutate();
+      //NOTE: mutate으로 서버에 요청하여 클라이언트에 캐시된 데이터를 갱신, mutate(key)를 호출하여 동일한 키를 사용하는 다른 SWR hook에게 갱신 메시지를 전역으로 브로드캐스팅 가능
     } catch (error) {
       console.log("uploadImage ERROR", error);
     }

@@ -16,10 +16,9 @@ const SubPage = () => {
   const [ownSub, setOwnSub] = useState(false);
   const {
     data: sub,
-    mutate,
+    mutate: subMutate,
     error,
   } = useSWR(subName ? `/subs/${subName}` : null);
-  // const [renderPosts, setRenderPost] = useState("00000");
 
   useEffect(() => {
     if (!sub || !user) return;
@@ -48,7 +47,7 @@ const SubPage = () => {
       await axios.post(`/subs/${sub.name}/upload`, formData, {
         headers: { "Context-Type": "multipart/form-data" },
       });
-      mutate();
+      subMutate();
       //NOTE: mutate으로 서버에 요청하여 클라이언트에 캐시된 데이터를 갱신, mutate(key)를 호출하여 동일한 키를 사용하는 다른 SWR hook에게 갱신 메시지를 전역으로 브로드캐스팅 가능
     } catch (error) {
       console.log("uploadImage ERROR", error);
@@ -62,7 +61,7 @@ const SubPage = () => {
     <p className="text-lg text-center">작성된 포스트가 없습니다.</p>;
   } else {
     renderPosts = sub.posts.map((post: Post) => (
-      <PostCard key={post.identifier} post={post} />
+      <PostCard key={post.identifier} post={post} subMutate={subMutate} />
     ));
   }
 
@@ -125,9 +124,7 @@ const SubPage = () => {
           </div>
           {/* Todo: posts and sidebar */}
           <div className="flex max-w-5xl px-4 pt-5 mx-auto">
-            <div className="w-full md:mr-3 md:w-8/12">
-              POST LIST {renderPosts}
-            </div>
+            <div className="w-full md:mr-3 md:w-8/12">{renderPosts}</div>
             <SideBar sub={sub} />
           </div>
         </>

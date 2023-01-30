@@ -10,6 +10,7 @@ import axios from "axios";
 
 type PostcardProps = {
   post: Post;
+  subMutate: () => void;
 };
 
 const PostCard = ({
@@ -27,6 +28,7 @@ const PostCard = ({
     username,
     sub,
   },
+  subMutate,
 }: PostcardProps) => {
   const { authenticated } = useAuthState();
 
@@ -37,14 +39,13 @@ const PostCard = ({
 
     try {
       await axios.post("/votes", { identifier, slug, value });
-      //   if(subMutate){subMutate}
+      subMutate();
     } catch (error) {
       console.log(error);
     }
   };
   return (
     <div className="flex mb-4 bg-white rounded" id={identifier}>
-      POSTCARD
       <div className="flex-shrink-0 w-10 py-2 text-center rounded-l">
         <div
           className="flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-blue-500"

@@ -107,10 +107,36 @@ const getPostComments = async (req: Request, res: Response) => {
   }
 };
 
+// [Infinite Scroll]
+const getPosts = async (req: Request, res: Response) => {
+  const currentPage: number = (req.query.page || 0) as number;
+  const perPage: number = (req.query.page || 8) as number;
+
+  try {
+    const posts = await Post.find({
+      order: { createdAt: "DESC" },
+      relations: ["sub", "votes", "comments"],
+      skip: currentPage * perPage,
+      take: perPage,
+    });
+
+    if (res.locals.user) {
+      posts.forEach((p) => p.setUserVote(res.locals.user));
+    }
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ error: "무한 스크롤에 문제가 발생했습니다." });
+  }
+};
+
 const router = Router();
 router.get("/:identifier/:slug", userMiddleware, getPost);
 router.post("/", userMiddleware, authMiddleware, createPost);
 router.post("/:identifier/:slug/comments", userMiddleware, createPostComment);
 router.get("/:identifier/:slug/comments", userMiddleware, getPostComments);
+
+router.get("/", userMiddleware, getPosts); // [Infinite Scroll]
 
 export default router;

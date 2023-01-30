@@ -19,6 +19,7 @@ const SubPage = () => {
     mutate,
     error,
   } = useSWR(subName ? `/subs/${subName}` : null);
+  // const [renderPosts, setRenderPost] = useState("00000");
 
   useEffect(() => {
     if (!sub || !user) return;
@@ -54,15 +55,15 @@ const SubPage = () => {
     }
   };
 
-  let renderPosts;
+  let renderPosts = <p>Welcome</p>;
   if (!sub) {
-    renderPosts = <p>Loading</p>;
-  } else if (sub.posts.length) {
-    <p>작성된 포스트가 없습니다.</p>;
+    renderPosts = <p className="text-lg text-center">Loading</p>;
+  } else if (sub.posts.length === 0) {
+    <p className="text-lg text-center">작성된 포스트가 없습니다.</p>;
   } else {
-    renderPosts = sub.posts.map((post: Post) => {
-      <PostCard post={post} key={post.identifier} />;
-    });
+    renderPosts = sub.posts.map((post: Post) => (
+      <PostCard key={post.identifier} post={post} />
+    ));
   }
 
   return (
@@ -124,7 +125,9 @@ const SubPage = () => {
           </div>
           {/* Todo: posts and sidebar */}
           <div className="flex max-w-5xl px-4 pt-5 mx-auto">
-            <div className="w-full md:mr-3 md:w-10/12">{renderPosts}</div>
+            <div className="w-full md:mr-3 md:w-8/12">
+              POST LIST {renderPosts}
+            </div>
             <SideBar sub={sub} />
           </div>
         </>

@@ -25,7 +25,7 @@ export interface Post {
   title: string;
   slug: string;
   body: string;
-  subNabe: string;
+  subName: string;
   username: string;
   createdAt: string;
   updatedAt: string;

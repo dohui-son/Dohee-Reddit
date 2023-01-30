@@ -5,6 +5,8 @@ import Image from "next/image";
 import useSWR, { mutate } from "swr";
 import { useAuthState } from "@/src/context/auth";
 import SideBar from "@/src/components/SideBar";
+import PostCard from "@/src/components/PostCard";
+import { Post } from "@/src/types";
 
 const SubPage = () => {
   const router = useRouter();
@@ -51,6 +53,17 @@ const SubPage = () => {
       console.log("uploadImage ERROR", error);
     }
   };
+
+  let renderPosts;
+  if (!sub) {
+    renderPosts = <p>Loading</p>;
+  } else if (sub.posts.length) {
+    <p>작성된 포스트가 없습니다.</p>;
+  } else {
+    renderPosts = sub.posts.map((post: Post) => {
+      <PostCard post={post} key={post.identifier} />;
+    });
+  }
 
   return (
     <>
@@ -111,7 +124,7 @@ const SubPage = () => {
           </div>
           {/* Todo: posts and sidebar */}
           <div className="flex max-w-5xl px-4 pt-5 mx-auto">
-            <div className="w-full md:mr-3 md:w-10/12"></div>
+            <div className="w-full md:mr-3 md:w-10/12">{renderPosts}</div>
             <SideBar sub={sub} />
           </div>
         </>

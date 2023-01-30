@@ -58,6 +58,6 @@ export default class Comment extends BaseEntity {
 
   @BeforeInsert()
   makeId() {
-    this.identifier = makeId(0);
+    this.identifier = makeId(8);
   }
 }

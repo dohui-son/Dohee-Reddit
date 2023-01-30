@@ -77,6 +77,7 @@ const createPostComment = async (req: Request, res: Response) => {
     }
 
     await comment.save();
+    console.log(comment);
     return res.json(comment);
   } catch (error) {
     console.log(error);
@@ -86,7 +87,7 @@ const createPostComment = async (req: Request, res: Response) => {
 
 const getPostComments = async (req: Request, res: Response) => {
   const { identifier, slug } = req.params;
-
+  console.log(identifier);
   try {
     const post = await Post.findOneByOrFail({ identifier, slug });
     const comments = await Comment.find({

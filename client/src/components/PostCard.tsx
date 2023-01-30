@@ -65,9 +65,16 @@ const PostCard = ({
         </div>
       </div>
       {/* POST DATA */}
-      <div className="w-full p-2">
-        {!isInSubPage && (
-          <div className="flex items-center">
+
+      {!isInSubPage && (
+        <div
+          className="w-full p-2 cursor-pointer"
+          onClick={() => {
+            router.push(url);
+          }}
+        >
+          {/* {!isInSubPage && ( */}
+          <div className="w-full flex items-center">
             <Link href={`/r/${subName}`}>
               <Image
                 src={sub!.imageUrl}
@@ -85,26 +92,30 @@ const PostCard = ({
             </Link>
             <span className="mx-1 text-xs text-gray-400">·</span>
           </div>
-        )}
-        <p className="text-xs text-gray-400">
-          {" "}
-          Posted by{" "}
-          <Link href={`/r/${username}`} className="mx-1 hover:underline">
-            ${username}
+          {/* )} */}
+          <p
+            className="text-xs text-gray-400"
+            onClick={() => {
+              router.push(`/r/${username}`);
+            }}
+          >
+            <Link href={`/r/${username}`} className="mx-1 hover:underline">
+              Posted by {username}
+            </Link>
+            {dayjs(createdAt).format("YYYY-MM-DD HH:mm")}
+          </p>
+          <Link href={url} className="my-1 text-lg font-medium">
+            {title}
           </Link>
-          {dayjs(createdAt).format("YYYY-MM-DD HH:mm")}
-        </p>
-        <Link href={url} className="my-1 text-lg font-medium">
-          {title}
-        </Link>
-        {body && <p className="my-1 text-sm">{body}</p>}
-        <div className="flex text-gray-400">
-          <Link href={url}>
-            <i className="mr-1 fas fa-comment-alt fa-xs"></i>
-            <span> {commentCount}</span>
-          </Link>
+          {body && <p className="my-1 text-sm">{body}</p>}
+          <div className="flex text-gray-400">
+            <Link href={url}>
+              <i className="mr-1 fas fa-comment-alt fa-xs"></i>
+              <span> {commentCount}</span>
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -7,6 +7,8 @@ const UserPage = () => {
   const username = router.query.username;
   const { data, error } = useSWR(username ? `/user/${username}` : null);
 
+  console.log(data);
+
   return <></>;
 };
 

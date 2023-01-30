@@ -11,8 +11,10 @@ import axios from "axios";
 import { useAuthState } from "../context/auth";
 import useSWRInfinite from "swr/infinite";
 import PostCard from "../components/PostCard";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
+  const router = useRouter();
   const fetcher = async (url: string) => {
     return await axios.get(url).then((res) => res.data);
   };
@@ -68,61 +70,68 @@ const Home: NextPage = () => {
   }, [posts]);
 
   return (
-    <div className="flex max-w-5xl px-4 pt-5 mx-auto">
-      {/* 포스트리스트 */}
-      <div className="w-full md:mr-3 md:w-8/12">
-        {" "}
-        {isInitialLoading && <p className="text-lg text-center"> LOADING...</p>}
-        {posts?.map((post) => (
-          <PostCard key={post.identifier} post={post} subMutate={mutate} />
-        ))}
-      </div>
+    <div className="bg-gray-50">
+      <div className="flex max-w-5xl px-4 pt-5 mx-auto">
+        {/* 포스트리스트 */}
+        <div className="w-full md:mr-3 md:w-8/12">
+          {" "}
+          {isInitialLoading && (
+            <p className="text-lg text-center"> LOADING...</p>
+          )}
+          {posts?.map((post) => (
+            <PostCard key={post.identifier} post={post} subMutate={mutate} />
+          ))}
+        </div>
 
-      {/* 사이드바 */}
-      <div className="hidden w-4/12 ml-3 md:block">
-        <div className="bg-white border rounded">
-          <div className="p-4 border-b">
-            <p className="text-lg text-gray-400 font-semibold text-center">
-              인기 커뮤니티
-            </p>
-          </div>
-          {/* 커뮤니티목록 */}
-          <div>
-            {topSubs?.map((sub) => (
-              <div
-                key={sub.name}
-                className="flex items-center px-4 py-2 text-xs border-b"
-              >
-                <Link href={`/r/${sub.name}`}>
-                  <Image
-                    src={sub.imageUrl}
-                    className="rounded-full cursor-pointer"
-                    alt="Sub"
-                    width={24}
-                    height={24}
-                  />
-                </Link>
-                <Link
-                  href={`/r/${sub.name}`}
-                  className="ml-2 font-bold hover:cursor-pointer"
+        {/* 사이드바 */}
+        <div className="hidden w-4/12 ml-3 md:block">
+          <div className="bg-white border rounded">
+            <div className="p-4 border-b">
+              <p className="text-lg text-gray-400 font-semibold text-center">
+                인기 커뮤니티
+              </p>
+            </div>
+            {/* 커뮤니티목록 */}
+            <div>
+              {topSubs?.map((sub) => (
+                <div
+                  key={sub.name}
+                  className="flex items-center px-4 py-2 text-xs border-b cursor-pointer"
+                  onClick={() => {
+                    router.push(`/r/${sub.name}`);
+                  }}
                 >
-                  {/* Todo: 해야할일 */}
-                  {sub.name}
-                </Link>
-                <p className="ml-auto font-med">{sub.postCount}</p>
-              </div>
-            ))}
-          </div>
+                  <Link href={`/r/${sub.name}`}>
+                    <Image
+                      src={sub.imageUrl}
+                      className="rounded-full cursor-pointer"
+                      alt="Sub"
+                      width={24}
+                      height={24}
+                    />
+                  </Link>
+                  <Link
+                    href={`/r/${sub.name}`}
+                    className="ml-2 font-bold hover:cursor-pointer"
+                  >
+                    {/* Todo: 해야할일 */}
+                    {sub.name}
+                  </Link>
+                  <p className="ml-auto font-med">{sub.postCount}</p>
+                </div>
+              ))}
+            </div>
 
-          <div className="w-full py-6 text-center">
-            {authenticated && (
-              <Link
-                href="/subs/create"
-                className="w-full p-2 text-center text-sm text-gray-400 border border-gray-300 rounded hover:border-gray-700"
-              >
-                커뮤니티 생성👥
-              </Link>
-            )}
+            <div className="w-full py-6 text-center">
+              {authenticated && (
+                <Link
+                  href="/subs/create"
+                  className="w-full p-2 text-center text-sm text-gray-400 border border-gray-300 rounded hover:border-gray-700"
+                >
+                  커뮤니티 생성👥
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </div>

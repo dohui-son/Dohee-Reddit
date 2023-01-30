@@ -9,6 +9,7 @@ import useSWR from "swr";
 import axios from "axios";
 import { useAuthState } from "../context/auth";
 import useSWRInfinite from "swr/infinite";
+import PostCard from "../components/PostCard";
 
 const Home: NextPage = () => {
   const fetcher = async (url: string) => {
@@ -31,17 +32,27 @@ const Home: NextPage = () => {
     isValidating,
     mutate,
   } = useSWRInfinite<Post[]>(getKey);
+  const isInitialLoading = !data && !error;
+  const posts: Post[] = data ? ([] as Post[]).concat(...data) : [];
 
   return (
     <div className="flex max-w-5xl px-4 pt-5 mx-auto">
       {/* 포스트리스트 */}
-      <div className="w-full md:mr-3 md:w-8/12"> </div>
+      <div className="w-full md:mr-3 md:w-8/12">
+        {" "}
+        {isInitialLoading && <p className="text-lg text-center"> LOADING...</p>}
+        {posts?.map((post) => (
+          <PostCard key={post.identifier} post={post} />
+        ))}
+      </div>
 
       {/* 사이드바 */}
       <div className="hidden w-4/12 ml-3 md:block">
         <div className="bg-white border rounded">
           <div className="p-4 border-b">
-            <p className="text-lg font-semibold text-center">인기 커뮤니티</p>
+            <p className="text-lg text-gray-400 font-semibold text-center">
+              인기 커뮤니티
+            </p>
           </div>
           {/* 커뮤니티목록 */}
           <div>
@@ -75,9 +86,9 @@ const Home: NextPage = () => {
             {authenticated && (
               <Link
                 href="/subs/create"
-                className="w-full p-2 text-center text-white bg-gray-400 rounded"
+                className="w-full p-2 text-center text-sm text-gray-400 border border-gray-300 rounded hover:border-gray-700"
               >
-                커뮤니티 만들기
+                커뮤니티 생성👥
               </Link>
             )}
           </div>

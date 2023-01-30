@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 
 type PostcardProps = {
   post: Post;
-  subMutate: () => void;
+  subMutate?: () => void;
 };
 
 const PostCard = ({
@@ -42,7 +42,7 @@ const PostCard = ({
 
     try {
       await axios.post("/votes", { identifier, slug, value });
-      subMutate();
+      if (subMutate) subMutate();
     } catch (error) {
       console.log(error);
     }
@@ -98,11 +98,12 @@ const PostCard = ({
           {title}
         </Link>
         {body && <p className="my-1 text-sm">{body}</p>}
-        <div className="flex">
+        <div className="flex text-gray-400">
           <Link href={url}>
-            <span>{commentCount}</span>
+            <i className="mr-1 fas fa-comment-alt fa-xs"></i>
+            <span> {commentCount}</span>
           </Link>
-        </div>{" "}
+        </div>
       </div>
     </div>
   );

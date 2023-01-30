@@ -91,7 +91,7 @@ const PostPage = () => {
                 <div className="flex-shrink-0 w-10 py-2 text-center rounded-l">
                   <div
                     className={classNames(
-                      "w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500",
+                      "flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500",
                       { "bg-blue-200": post.userVote === 1 }
                     )}
                     onClick={() => vote(1)}
@@ -103,7 +103,7 @@ const PostPage = () => {
                   </p>
                   <div
                     className={classNames(
-                      "w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500",
+                      "flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500",
                       { "bg-red-200": post.userVote === -1 }
                     )}
                     onClick={() => vote(-1)}
@@ -182,7 +182,7 @@ const PostPage = () => {
                   {/* good bad */}
                   <div className="flex-shrink-0 w-10 py-2 text-center rounded-l">
                     <div
-                      className="w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-blue-500"
+                      className="flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-blue-500"
                       onClick={() => vote(1, comment)}
                     >
                       <i
@@ -195,7 +195,7 @@ const PostPage = () => {
                       {comment.voteScore}
                     </p>
                     <div
-                      className="w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500"
+                      className="flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500"
                       onClick={() => vote(-1, comment)}
                     >
                       <i

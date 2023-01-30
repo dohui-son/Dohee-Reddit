@@ -2,7 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import { useAuthState } from "@/src/context/auth";
 import SideBar from "@/src/components/SideBar";
 
@@ -12,7 +12,11 @@ const SubPage = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { authenticated, user } = useAuthState();
   const [ownSub, setOwnSub] = useState(false);
-  const { data: sub, error } = useSWR(subName ? `/subs/${subName}` : null);
+  const {
+    data: sub,
+    mutate,
+    error,
+  } = useSWR(subName ? `/subs/${subName}` : null);
 
   useEffect(() => {
     if (!sub || !user) return;
@@ -20,7 +24,7 @@ const SubPage = () => {
   }, [sub]);
 
   const openFileInput = (type: string) => {
-    if (!ownSub) return; // 내가 생성한 커뮤니티가 아니면 배머 및 프로필 이미지 변경 불가
+    if (!ownSub) return; // 내가 생성한 커뮤니티가 아니면 배너 및 프로필 이미지 변경 불가
 
     const fileInput = fileInputRef.current;
     if (fileInput) {
@@ -41,6 +45,7 @@ const SubPage = () => {
       await axios.post(`/subs/${sub.name}/upload`, formData, {
         headers: { "Context-Type": "multipart/form-data" },
       });
+      mutate();
     } catch (error) {
       console.log("uploadImage ERROR", error);
     }
@@ -72,7 +77,7 @@ const SubPage = () => {
                 ></div>
               ) : (
                 <div
-                  className="h-20 bg-gray-200"
+                  className="h-56 bg-gray-200"
                   onClick={() => openFileInput("banner")}
                 ></div>
               )}

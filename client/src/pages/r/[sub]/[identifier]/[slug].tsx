@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 
 import { Post, Comment } from "@/src/types";
 import Link from "next/link";
@@ -17,7 +17,7 @@ const PostPage = () => {
   const { data: post, error } = useSWR<Post>(
     identifier && slug ? `/posts/${identifier}/${slug}` : null
   );
-  const { data: comments } = useSWR<Comment[]>(
+  const { data: comments, mutate } = useSWR<Comment[]>(
     identifier && slug ? `/posts/${identifier}/${slug}/comments` : null
   );
 
@@ -43,6 +43,7 @@ const PostPage = () => {
           body: newComment,
         }
       );
+      mutate();
 
       setNewComment("");
     } catch (error) {

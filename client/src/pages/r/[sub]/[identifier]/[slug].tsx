@@ -15,10 +15,12 @@ const PostPage = () => {
   const { identifier, sub, slug } = router.query;
   const [newComment, setNewComment] = useState("");
   //NOTE: fetcher - _app 에서 SWRConfig로 fetcher를 처리해줬기때문에 모든 컴포넌트의 useSWR에 fetcher 넣어주지 않아도 됨
-  const { data: post, error } = useSWR<Post>(
-    identifier && slug ? `/posts/${identifier}/${slug}` : null
-  );
-  const { data: comments, mutate } = useSWR<Comment[]>(
+  const {
+    data: post,
+    mutate: postMutate,
+    error,
+  } = useSWR<Post>(identifier && slug ? `/posts/${identifier}/${slug}` : null);
+  const { data: comments, mutate: commentMutate } = useSWR<Comment[]>(
     identifier && slug ? `/posts/${identifier}/${slug}/comments` : null
   );
 
@@ -44,7 +46,7 @@ const PostPage = () => {
           body: newComment,
         }
       );
-      mutate();
+      commentMutate();
 
       setNewComment("");
     } catch (error) {
@@ -64,12 +66,15 @@ const PostPage = () => {
     }
 
     try {
-      await axios.post("/votes", {
+      const res = await axios.post("/votes", {
         identifier,
         slug,
         commentIdentifier: comment?.identifier,
         value,
       });
+
+      postMutate();
+      commentMutate();
     } catch (error) {
       console.log(error);
     }
@@ -87,7 +92,7 @@ const PostPage = () => {
                   <div
                     className={classNames(
                       "w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500",
-                      { "bg-blue-300": post.userVote === 1 }
+                      { "bg-blue-200": post.userVote === 1 }
                     )}
                     onClick={() => vote(1)}
                   >
@@ -99,7 +104,7 @@ const PostPage = () => {
                   <div
                     className={classNames(
                       "w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500",
-                      { "bg-red-300": post.userVote === -1 }
+                      { "bg-red-200": post.userVote === -1 }
                     )}
                     onClick={() => vote(-1)}
                   >
@@ -126,9 +131,7 @@ const PostPage = () => {
                   <div className="flex">
                     <button>
                       <i className="mr-1 fas fa-comment-alt fa-xs"></i>
-                      <span className="font-bold">
-                        Comments{post.commentCount}
-                      </span>
+                      <span className="font-bold">Comments</span>
                     </button>
                   </div>
                 </div>
@@ -180,7 +183,7 @@ const PostPage = () => {
                   <div className="flex-shrink-0 w-10 py-2 text-center rounded-l">
                     <div
                       className="w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-blue-500"
-                      onClick={() => vote(1)}
+                      onClick={() => vote(1, comment)}
                     >
                       <i
                         className={classNames("fas fa-arrow-up", {
@@ -193,11 +196,11 @@ const PostPage = () => {
                     </p>
                     <div
                       className="w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500"
-                      onClick={() => vote(-1)}
+                      onClick={() => vote(-1, comment)}
                     >
                       <i
                         className={classNames("fas fa-arrow-down", {
-                          "text-red-500": comment.userVote === 1,
+                          "text-red-500": comment.userVote === -1,
                         })}
                       ></i>
                     </div>

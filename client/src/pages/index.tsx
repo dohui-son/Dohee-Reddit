@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "@next/font/google";
@@ -20,6 +21,7 @@ const Home: NextPage = () => {
   const { authenticated } = useAuthState();
 
   // [Infinite Scroll]
+  const [observedPost, setObservedPost] = useState("");
   const getKey = (pageIndex: number, previousPageData: Post[]) => {
     if (previousPageData && !previousPageData.length) return null;
     return `/posts?page=${pageIndex}`;
@@ -34,6 +36,36 @@ const Home: NextPage = () => {
   } = useSWRInfinite<Post[]>(getKey);
   const isInitialLoading = !data && !error;
   const posts: Post[] = data ? ([] as Post[]).concat(...data) : [];
+
+  const observedElement = (element: HTMLElement | null) => {
+    if (!element) return;
+
+    //NOTE: 브라우저 Viewport와 설정한 element의 교차점 관잘
+    const obeserver = new IntersectionObserver(
+      (entries) => {
+        //isIntersecting: 관찰대상 교차상태(boolean)
+        if (entries[0].isIntersecting === true) {
+          console.log("Reached the bottom");
+          setPage(page + 1);
+          obeserver.unobserve(element);
+        }
+      },
+      //NOTE: 옵저버 실행 위해 교차지점 비율 설정(백분율)
+      { threshold: 0.7 }
+    );
+    obeserver.observe(element);
+  };
+
+  useEffect(() => {
+    //포스트 없음: return
+    if (!posts || posts.length === 0) return;
+
+    const id = posts[posts.length - 1].identifier;
+    if (id !== observedPost) {
+      setObservedPost(id);
+      observedElement(document.getElementById(id));
+    }
+  }, [posts]);
 
   return (
     <div className="flex max-w-5xl px-4 pt-5 mx-auto">

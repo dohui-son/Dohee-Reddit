@@ -4,6 +4,9 @@ import classNames from "classnames";
 import Link from "next/link";
 import Image from "next/image";
 import dayjs from "dayjs";
+import { useAuthState } from "../context/auth";
+import Router from "next/router";
+import axios from "axios";
 
 type PostcardProps = {
   post: Post;
@@ -25,20 +28,34 @@ const PostCard = ({
     sub,
   },
 }: PostcardProps) => {
+  const { authenticated } = useAuthState();
+
+  const vote = async (value: number) => {
+    if (!authenticated) Router.push("/");
+
+    if (value === userVote) value = 0;
+
+    try {
+      await axios.post("/votes", { identifier, slug, value });
+      //   if(subMutate){subMutate}
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="flex mb-4 bg-white rounded" id={identifier}>
       POSTCARD
       <div className="flex-shrink-0 w-10 py-2 text-center rounded-l">
         <div
           className="flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-blue-500"
-          //   onClick={() => vote(1, comment)}
+          onClick={() => vote(1)}
         >
           😄
         </div>
         <p className="text-xs font-bold text-gray-400">{voteScore}</p>
         <div
           className="flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500"
-          //   onClick={() => vote(-1, comment)}
+          onClick={() => vote(-1)}
         >
           🥲
         </div>

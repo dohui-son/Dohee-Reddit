@@ -23,6 +23,7 @@ const PostPage = () => {
   const { data: comments, mutate: commentMutate } = useSWR<Comment[]>(
     identifier && slug ? `/posts/${identifier}/${slug}/comments` : null
   );
+  const { data: wholePosts, error: wholePostError } = useSWR<Post>(``);
 
   //NOTE: fetcher - _app 에서 SWRConfig로 fetcher를 처리해줬기때문에 모든 컴포넌트의 useSWR에 fetcher 넣어주지 않아도 됨
   //   const fetcher = async (url: string) => {

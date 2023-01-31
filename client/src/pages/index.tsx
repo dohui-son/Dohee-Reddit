@@ -21,6 +21,9 @@ const Home: NextPage = () => {
   const address = "http://localhost:4000/api/subs/sub/topSubs";
   const { data: topSubs } = useSWR<Sub[]>(address, fetcher);
   const { authenticated } = useAuthState();
+  const [wholePost, setWholePost] = useState({});
+  const { data: postList, error: postListError } =
+    useSWR<Post[]>(`/posts/postlist`);
 
   // [Infinite Scroll]
   const [observedPost, setObservedPost] = useState("");
@@ -68,8 +71,6 @@ const Home: NextPage = () => {
       observedElement(document.getElementById(id));
     }
   }, [posts]);
-
-  if (!posts) return <></>;
 
   return (
     <div className="bg-gray-50">

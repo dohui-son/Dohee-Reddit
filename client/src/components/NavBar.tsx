@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useAuthDispatch, useAuthState } from "../context/auth";
 import axios from "axios";
 import Image from "next/image";
 
 import Logo from "../assets/lounge_w.png";
+import Router, { useRouter } from "next/router";
 
 const NavBar: React.FC = () => {
   const { loading, authenticated } = useAuthState();
   const dispatch = useAuthDispatch();
+  const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleLogout = () => {
     axios
@@ -21,6 +24,11 @@ const NavBar: React.FC = () => {
         console.log(error);
       });
   };
+
+  const searchPost = (e: Event) => {
+    e.preventDefault();
+    router.push(`/r/${searchTerm}`);
+  };
   return (
     <div className="fixed inset-x-0 top-0 z-10 flex items-center justify-between h-16 px-8 bg-white">
       <span className="p-2 text-2xl font-semibold text-gray-400">
@@ -31,7 +39,7 @@ const NavBar: React.FC = () => {
 
       <div className="max-w-full px-4">
         <div className="relative flex items-center bg-gray-100 border rounded hover:border-gray-700 hover:bg-white">
-          <i className="ml-2 text-gray-400 fas fa-search"></i>
+          <i className="ml-5 text-gray-400 fas fa-search cursor:pointer"></i>
           <input
             type="text"
             placeholder="Search"

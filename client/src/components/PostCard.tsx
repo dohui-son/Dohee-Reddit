@@ -8,6 +8,7 @@ import { useAuthState } from "../context/auth";
 import Router from "next/router";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Logo from "../assets/lounge_sq_b.png";
 
 type PostcardProps = {
   post: Post;
@@ -77,11 +78,11 @@ const PostCard = ({
           <Link href={`/r/${subName}`}>
             {!isInSubPage && (
               <Image
-                src={sub!.imageUrl}
+                src={Logo}
                 alt="sub"
                 className="rounded-full cursor-pointer"
-                width={12}
-                height={12}
+                width={20}
+                height={20}
               />
             )}
           </Link>

@@ -8,6 +8,8 @@ import Link from "next/link";
 import dayjs from "dayjs";
 import { useAuthState } from "@/src/context/auth";
 import classNames from "classnames";
+import Banner from "../../../../assets/small_banner.png";
+import Image from "next/image";
 
 const PostPage = () => {
   const { authenticated, user } = useAuthState();
@@ -82,150 +84,159 @@ const PostPage = () => {
   };
 
   return (
-    <div className="flex max-w-5xl px-10 pt-5 mx-auto">
-      <div className="w-full md:mr-3 md:w-9/12">
-        <div className="bg-white rounded">
-          {post && (
-            <>
-              <div className="flex">
-                {/* Good Bad */}
-                <div className="flex-shrink-0 w-10 py-2 text-center rounded-l">
-                  <div
-                    className={classNames(
-                      "flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500",
-                      { "bg-blue-200": post.userVote === 1 }
-                    )}
-                    onClick={() => vote(1)}
-                  >
-                    😄
-                  </div>
-                  <p className="text-xs font-bold text-gray-400">
-                    {post.voteScore}
-                  </p>
-                  <div
-                    className={classNames(
-                      "flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500",
-                      { "bg-red-200": post.userVote === -1 }
-                    )}
-                    onClick={() => vote(-1)}
-                  >
-                    😢
-                  </div>
-                </div>
-                <div className="py-2 pr-2">
-                  <div className="flex items-center">
-                    <p className="text-xs test-gray-400">
-                      Posted by
-                      <Link
-                        href={`/u/${post.username}`}
-                        className="mx-1 hover:underline"
-                      >
-                        {post.username}
-                      </Link>
-                      <Link href={post.url} className="mx-1 hover:underline">
-                        {dayjs(post.createdAt).format("YYY-MM-DD HH:mm")}
-                      </Link>
-                    </p>
-                  </div>
-                  <h1 className="my-1 text-xl font-medium">{post.title}</h1>
-                  <p className="my-3 text-sm">{post.body}</p>
-                  <div className="text-mint mt-20">
-                    <i className="mr-5 fas fa-comment-alt fa-s text-mint"></i>
-                    <span className="font-bold">Comments</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="pr-6 mb-4">
-                {authenticated ? (
-                  <div>
-                    <p className="mb-1 text-xs">
-                      <Link
-                        href={`/u/${user?.username}`}
-                        className="font-semibold text-blue-400"
-                      >
-                        {user?.username}
-                      </Link>{" "}
-                      님의 댓글 작성
-                    </p>
-                    <form onSubmit={handleSubmit}>
-                      <textarea
-                        className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-gray-400"
-                        onChange={(e) => setNewComment(e.target.value)}
-                        value={newComment}
-                      ></textarea>
-                      <div className="flex justify-end">
-                        <button
-                          className="px-3 py-1 text-gray-300 border border-gray-300 rounded hover:text-white hover:bg-mint"
-                          disabled={newComment.trim() === ""}
-                        >
-                          댓글 작성
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-between px-2 py-4 border border-gray-200 rounded">
-                    <Link
-                      className="font-semibold text-pblue hover:text-mint"
-                      href={`/login`}
-                    >
-                      댓글 작성을 위해 로그인해주세요.
-                    </Link>
-                  </div>
-                )}
-              </div>
-              {/* comment list */}
-              {comments?.map((comment) => (
-                <div className="flex" key={comment.identifier}>
-                  {/* good bad */}
+    <div>
+      <div className="flex max-w-5xl px-10 pt-5 mx-auto">
+        <div className="w-full md:mr-3 md:w-10/12">
+          <div className="bg-white rounded">
+            <Image
+              className="h-30 w-full"
+              alt="banner"
+              src={Banner}
+              height={5}
+              width={80}
+            />
+            {post && (
+              <>
+                <div className="flex">
+                  {/* Good Bad */}
                   <div className="flex-shrink-0 w-10 py-2 text-center rounded-l">
                     <div
-                      className="flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-blue-500"
-                      onClick={() => vote(1, comment)}
+                      className={classNames(
+                        "flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500",
+                        { "bg-blue-200": post.userVote === 1 }
+                      )}
+                      onClick={() => vote(1)}
                     >
-                      <i
-                        className={classNames("fas fa-arrow-up", {
-                          "text-blue-500": comment.userVote === 1,
-                        })}
-                      ></i>
+                      😄
                     </div>
                     <p className="text-xs font-bold text-gray-400">
-                      {comment.voteScore}
+                      {post.voteScore}
                     </p>
                     <div
-                      className="flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500"
-                      onClick={() => vote(-1, comment)}
+                      className={classNames(
+                        "flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500",
+                        { "bg-red-200": post.userVote === -1 }
+                      )}
+                      onClick={() => vote(-1)}
                     >
-                      <i
-                        className={classNames("fas fa-arrow-down", {
-                          "text-red-500": comment.userVote === -1,
-                        })}
-                      ></i>
+                      😢
                     </div>
                   </div>
+                  <div className="py-2 pr-2">
+                    <div className="flex items-center">
+                      <p className="text-xs test-gray-400">
+                        Posted by
+                        <Link
+                          href={`/u/${post.username}`}
+                          className="mx-1 hover:underline"
+                        >
+                          {post.username}
+                        </Link>
+                        <Link href={post.url} className="mx-1 hover:underline">
+                          {dayjs(post.createdAt).format("YYY-MM-DD HH:mm")}
+                        </Link>
+                      </p>
+                    </div>
+                    <h1 className="my-1 text-xl font-medium">{post.title}</h1>
+                    <p className="my-3 text-sm">{post.body}</p>
+                    <div className="text-mint mt-20">
+                      <i className="mr-5 fas fa-comment-alt fa-s text-mint"></i>
+                      <span className="font-bold">Comments</span>
+                    </div>
+                  </div>
+                </div>
 
-                  <div className="py-4 pr-2">
-                    <p className="mb-1 text-xs leading-none">
+                <div className="pr-6 mb-4">
+                  {authenticated ? (
+                    <div>
+                      <p className="mb-1 text-xs">
+                        <Link
+                          href={`/u/${user?.username}`}
+                          className="font-semibold text-blue-400"
+                        >
+                          {user?.username}
+                        </Link>{" "}
+                        님의 댓글 작성
+                      </p>
+                      <form onSubmit={handleSubmit}>
+                        <textarea
+                          className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-gray-400"
+                          onChange={(e) => setNewComment(e.target.value)}
+                          value={newComment}
+                        ></textarea>
+                        <div className="flex justify-end">
+                          <button
+                            className="px-3 py-1 text-gray-300 border border-gray-300 rounded hover:text-white hover:bg-mint"
+                            disabled={newComment.trim() === ""}
+                          >
+                            댓글 작성
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-between px-2 py-4 border border-gray-200 rounded">
                       <Link
-                        href={`/u/${comment.username}`}
-                        className="mr-1 font-bold text-gray-400 hover:underline"
+                        className="font-semibold text-pblue hover:text-mint"
+                        href={`/login`}
                       >
-                        {comment.username}
+                        댓글 작성을 위해 로그인해주세요.
                       </Link>
-                      <span className="text-gray-300">
-                        {`${comment.voteScore} 
+                    </div>
+                  )}
+                </div>
+                {/* comment list */}
+                {comments?.map((comment) => (
+                  <div className="flex" key={comment.identifier}>
+                    {/* good bad */}
+                    <div className="flex-shrink-0 w-10 py-2 text-center rounded-l">
+                      <div
+                        className="flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-blue-500"
+                        onClick={() => vote(1, comment)}
+                      >
+                        <i
+                          className={classNames("fas fa-arrow-up", {
+                            "text-blue-500": comment.userVote === 1,
+                          })}
+                        ></i>
+                      </div>
+                      <p className="text-xs font-bold text-gray-400">
+                        {comment.voteScore}
+                      </p>
+                      <div
+                        className="flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500"
+                        onClick={() => vote(-1, comment)}
+                      >
+                        <i
+                          className={classNames("fas fa-arrow-down", {
+                            "text-red-500": comment.userVote === -1,
+                          })}
+                        ></i>
+                      </div>
+                    </div>
+
+                    <div className="py-4 pr-2">
+                      <p className="mb-1 text-xs leading-none">
+                        <Link
+                          href={`/u/${comment.username}`}
+                          className="mr-1 font-bold text-gray-400 hover:underline"
+                        >
+                          {comment.username}
+                        </Link>
+                        <span className="text-gray-300">
+                          {`${comment.voteScore} 
                         posts
                         ${dayjs(comment.createdAt).format("YYY-MM-DD HH:mm")}
                         `}
-                      </span>
-                    </p>
-                    <p>{comment.body}</p>
+                        </span>
+                      </p>
+                      <p>{comment.body}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </>
-          )}
+                ))}
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>

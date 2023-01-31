@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { KeyboardEvent, useState } from "react";
 import Link from "next/link";
 import { useAuthDispatch, useAuthState } from "../context/auth";
 import axios from "axios";
@@ -25,9 +25,16 @@ const NavBar: React.FC = () => {
       });
   };
 
-  const searchPost = (e: Event) => {
-    e.preventDefault();
-    router.push(`/r/${searchTerm}`);
+  const searchPost = (e: KeyboardEvent) => {
+    // e.preventDefault();
+    if (searchTerm.trim() === "") {
+      setSearchTerm("");
+      return;
+    }
+    if (e.key === "Enter") {
+      router.push(`/s/${searchTerm}`);
+      setSearchTerm("");
+    }
   };
   return (
     <div className="fixed inset-x-0 top-0 z-10 flex items-center justify-between h-16 px-8 bg-white">
@@ -43,6 +50,9 @@ const NavBar: React.FC = () => {
           <input
             type="text"
             placeholder="Search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={(e) => searchPost(e)}
             className="px-10 py-1 bg-transparent rounded focus:outline-none"
           />
         </div>

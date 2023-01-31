@@ -29,7 +29,7 @@ const InputGroup: React.FC<InputGroupProps> = ({
         )}
         placeholder={placeholder}
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) => setValue(e.target.value.trim())}
       />
       <small className="font-medium text-red-500">{error}</small>
     </div>

@@ -81,7 +81,7 @@ const PostPage = () => {
   };
 
   return (
-    <div className="flex max-w-5xl px-4 pt-5 mx-auto">
+    <div className="flex max-w-5xl px-10 pt-5 mx-auto">
       <div className="w-full md:mr-3 md:w-9/12">
         <div className="bg-white rounded">
           {post && (
@@ -206,7 +206,7 @@ const PostPage = () => {
                     </div>
                   </div>
 
-                  <div className="py-2 pr-2">
+                  <div className="py-4 pr-2">
                     <p className="mb-1 text-xs leading-none">
                       <Link
                         href={`/u/${comment.username}`}

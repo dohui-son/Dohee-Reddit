@@ -2,6 +2,9 @@ import React from "react";
 import Link from "next/link";
 import { useAuthDispatch, useAuthState } from "../context/auth";
 import axios from "axios";
+import Image from "next/image";
+
+import Logo from "../assets/lounge_w.png";
 
 const NavBar: React.FC = () => {
   const { loading, authenticated } = useAuthState();
@@ -21,12 +24,14 @@ const NavBar: React.FC = () => {
   return (
     <div className="fixed inset-x-0 top-0 z-10 flex items-center justify-between h-16 px-8 bg-white">
       <span className="text-2xl font-semibold text-gray-400">
-        <Link href="/">COMMUNITY</Link>
+        <Link href="/">
+          <Image src={Logo} alt="service logo" width={130} height={50} />
+        </Link>
       </span>
 
       <div className="max-w-full px-4">
         <div className="relative flex items-center bg-gray-100 border rounded hover:border-gray-700 hover:bg-white">
-          {/* <i className="pl-4 pr-3 text-gray-400 fas fa-search">Todo</i> */}
+          <i className="ml-2 text-gray-400 fas fa-search"></i>
           <input
             type="text"
             placeholder="Search"
@@ -41,21 +46,21 @@ const NavBar: React.FC = () => {
             className=" w-20 p-2 text-center  mr-2 text-white bg-gray-300 rounded hover:bg-gray-500"
             onClick={handleLogout}
           >
-            LOGOUT
+            Logout
           </button>
         ) : (
           <>
             <Link
               href="/login"
-              className="w-20 p-2 mr-2 text-center text-blue-500 border border-blue-500 rounded"
+              className="w-20 p-2 mr-2 text-center text-gray border border-teal-500 rounded"
             >
-              LOGIN
+              Login
             </Link>
             <Link
               href="/register"
-              className="w-20 p-2 text-center text-white bg-gray-400 rounded"
+              className="w-20 p-2 text-center text-white bg-mint-400 rounded"
             >
-              SIGNUP
+              Signup
             </Link>
           </>
         )}

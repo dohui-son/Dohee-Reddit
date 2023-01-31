@@ -69,6 +69,8 @@ const Home: NextPage = () => {
     }
   }, [posts]);
 
+  if (!posts) return <></>;
+
   return (
     <div className="bg-gray-50">
       <div className="flex max-w-5xl px-4 pt-5 mx-auto">
@@ -128,7 +130,7 @@ const Home: NextPage = () => {
                   href="/subs/create"
                   className="w-full p-2 text-center text-sm text-gray-400 border border-gray-300 rounded hover:border-gray-700"
                 >
-                  커뮤니티 생성👥
+                  커뮤니티 생성 👥
                 </Link>
               )}
             </div>

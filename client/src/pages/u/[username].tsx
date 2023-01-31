@@ -16,7 +16,7 @@ const UserPage = () => {
   if (!data) return null;
   return (
     <div className="flex max-w-5xl px-4 pt-5 mx-auto bg-gray-50">
-      {/* user post comment list */}
+      {/* user post comment list*/}
       <div className="w-full md:mr-3 md:w-8/12">
         {data.userData.map((data: any) => {
           if (data.type === "Post") {
@@ -50,7 +50,6 @@ const UserPage = () => {
           }
         })}
       </div>
-
       {/* user data */}
       <div className="hidden w-4/12 ml-3 md:block">
         <div className="flex items-center p-3 bg-blue-100 rounded-t">

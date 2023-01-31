@@ -47,6 +47,7 @@ const PostCard = ({
       console.log(error);
     }
   };
+
   return (
     <div className="flex mb-4 bg-white rounded" id={identifier}>
       <div className="flex-shrink-0 w-10 py-2 text-center rounded-l">
@@ -65,17 +66,16 @@ const PostCard = ({
         </div>
       </div>
       {/* POST DATA */}
-
-      {!isInSubPage && (
-        <div
-          className="w-full p-2 cursor-pointer"
-          onClick={() => {
-            router.push(url);
-          }}
-        >
-          {/* {!isInSubPage && ( */}
-          <div className="w-full flex items-center">
-            <Link href={`/r/${subName}`}>
+      {/* {isInSubPage && ( */}
+      <div
+        className="w-full p-2 cursor-pointer"
+        onClick={() => {
+          router.push(url);
+        }}
+      >
+        <div className="w-full flex items-center ">
+          <Link href={`/r/${subName}`}>
+            {!isInSubPage && (
               <Image
                 src={sub!.imageUrl}
                 alt="sub"
@@ -83,39 +83,39 @@ const PostCard = ({
                 width={12}
                 height={12}
               />
-            </Link>
-            <Link
-              href={`/r/${subName}`}
-              className="ml-2 text-xs font-bold cursor-pointer hover:underline"
-            >
-              {subName}
-            </Link>
-            <span className="mx-1 text-xs text-gray-400">·</span>
-          </div>
-          {/* )} */}
-          <p
-            className="text-xs text-gray-400"
-            onClick={() => {
-              router.push(`/r/${username}`);
-            }}
-          >
-            <Link href={`/r/${username}`} className="mx-1 hover:underline">
-              Posted by {username}
-            </Link>
-            {dayjs(createdAt).format("YYYY-MM-DD HH:mm")}
-          </p>
-          <Link href={url} className="my-1 text-lg font-medium">
-            {title}
+            )}
           </Link>
-          {body && <p className="my-1 text-sm">{body}</p>}
-          <div className="flex text-gray-400">
-            <Link href={url}>
-              <i className="mr-1 fas fa-comment-alt fa-xs"></i>
-              <span> {commentCount}</span>
-            </Link>
-          </div>
+          <Link
+            href={`/r/${subName}`}
+            className="ml-2 text-xs font-bold cursor-pointer hover:underline"
+          >
+            {subName}
+          </Link>
+          <span className="mx-1 text-xs text-gray-400">·</span>
         </div>
-      )}
+
+        <p
+          className="text-xs text-gray-400"
+          onClick={() => {
+            router.push(`/r/${username}`);
+          }}
+        >
+          <Link href={`/r/${username}`} className="mx-1 hover:underline">
+            Posted by {username}
+          </Link>
+          {dayjs(createdAt).format("YYYY-MM-DD HH:mm")}
+        </p>
+        <Link href={url} className="my-1 text-lg font-medium">
+          {title}
+        </Link>
+        {body && <p className="my-1 text-sm">{body}</p>}
+        <div className="flex text-gray-400">
+          <Link href={url}>
+            <i className="mr-1 fas fa-comment-alt fa-xs"></i>
+            <span> {commentCount}</span>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

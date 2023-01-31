@@ -4,6 +4,9 @@ import axios from "axios";
 import Link from "next/link";
 import InputGroup from "../components/InputGroup";
 import { useAuthDispatch, useAuthState } from "../context/auth";
+import Sqlogo from "../assets/lounge_sq_b.png";
+import Logo from "../assets/lounge_w.png";
+import Image from "next/image";
 
 const Login = () => {
   let router = useRouter();
@@ -37,7 +40,17 @@ const Login = () => {
   return (
     <div className="bg-white">
       <div className="flex flex-col items-center justify-center h-screen p-6">
-        <div className="w-10/12 mx-auto md:d-96">
+        <Image
+          src={Logo}
+          width={200}
+          height={200}
+          alt="logo"
+          className="m-10 cursor-pointer"
+          onClick={() => {
+            router.push("/");
+          }}
+        />
+        <div className="w-4/12 mx-auto md:d-96">
           <h1 className="mb-2 text-lg font-medium">👥 로그인</h1>
           <form onSubmit={handleSubmit}>
             <InputGroup
@@ -52,7 +65,8 @@ const Login = () => {
               setValue={setPassword}
               error={errors.password}
             />
-            <button className="w-full py-2 mb-1 text-xs font-bold text-white uppercase bg-gray-400 bordder border-gray-400 rounded">
+
+            <button className="w-full py-2 mb-1 text-xs font-bold text-white uppercase  bordder rounded bg-mint hover:bg-pblue">
               로그인
             </button>
           </form>

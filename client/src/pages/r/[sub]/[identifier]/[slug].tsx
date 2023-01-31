@@ -128,11 +128,9 @@ const PostPage = () => {
                   </div>
                   <h1 className="my-1 text-xl font-medium">{post.title}</h1>
                   <p className="my-3 text-sm">{post.body}</p>
-                  <div className="flex">
-                    <button>
-                      <i className="mr-1 fas fa-comment-alt fa-xs"></i>
-                      <span className="font-bold">Comments</span>
-                    </button>
+                  <div className="text-mint mt-20">
+                    <i className="mr-5 fas fa-comment-alt fa-s text-mint"></i>
+                    <span className="font-bold">Comments</span>
                   </div>
                 </div>
               </div>
@@ -157,7 +155,7 @@ const PostPage = () => {
                       ></textarea>
                       <div className="flex justify-end">
                         <button
-                          className="px-3 py-1 text-gray-300 border border-gray-300 rounded hover:text-white hover:bg-gray-300"
+                          className="px-3 py-1 text-gray-300 border border-gray-300 rounded hover:text-white hover:bg-mint"
                           disabled={newComment.trim() === ""}
                         >
                           댓글 작성
@@ -168,7 +166,7 @@ const PostPage = () => {
                 ) : (
                   <div className="flex items-center justify-between px-2 py-4 border border-gray-200 rounded">
                     <Link
-                      className="font-semibold text-gray-400 hover:text-blue-400"
+                      className="font-semibold text-pblue hover:text-mint"
                       href={`/login`}
                     >
                       댓글 작성을 위해 로그인해주세요.

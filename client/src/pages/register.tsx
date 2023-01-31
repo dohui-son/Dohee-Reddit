@@ -2,9 +2,10 @@ import React, { FormEvent, useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
+import Image from "next/image";
 import InputGroup from "../components/InputGroup";
 import { useAuthState } from "../context/auth";
+import Logo from "../assets/lounge_bl.png";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -37,7 +38,17 @@ const Register = () => {
   return (
     <div className="bg-white">
       <div className="flex flex-col items-center justify-center h-screen p-6">
-        <div className="w-10/12 mx-auto md:d-96">
+        <Image
+          src={Logo}
+          width={200}
+          height={200}
+          alt="logo"
+          className="m-10 cursor-pointer"
+          onClick={() => {
+            router.push("/");
+          }}
+        />
+        <div className="w-4/12 mx-auto md:d-96">
           <h1 className="mb-2 text-lg font-medium">📋 회원가입</h1>
           <form onSubmit={handleSubmit}>
             <InputGroup
@@ -58,7 +69,7 @@ const Register = () => {
               setValue={setPassword}
               error={errors.password}
             />
-            <button className="w-full py-2 mb-1 text-xs font-bold text-white uppercase bg-gray-400 bordder border-gray-400 rounded">
+            <button className="w-full py-2 mb-1 text-xs font-bold text-white uppercase bordder rounded bg-mint hover:bg-pblue">
               회원가입
             </button>
           </form>

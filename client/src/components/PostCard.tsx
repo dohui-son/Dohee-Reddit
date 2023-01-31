@@ -49,8 +49,8 @@ const PostCard = ({
   };
 
   return (
-    <div className="flex mb-4 bg-white rounded" id={identifier}>
-      <div className="flex-shrink-0 w-10 py-2 text-center rounded-l">
+    <div className="flex mb-7 bg-white rounded" id={identifier}>
+      <div className="flex-shrink-0 bg-mint200 w-10 py-2 text-center rounded-l">
         <div
           className="flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-blue-500"
           onClick={() => vote(1)}
@@ -73,7 +73,7 @@ const PostCard = ({
           router.push(url);
         }}
       >
-        <div className="w-full flex items-center ">
+        <div className="w-full flex items-center">
           <Link href={`/r/${subName}`}>
             {!isInSubPage && (
               <Image
@@ -105,6 +105,7 @@ const PostCard = ({
           </Link>
           {dayjs(createdAt).format("YYYY-MM-DD HH:mm")}
         </p>
+        <hr />
         <Link href={url} className="my-1 text-lg font-medium">
           {title}
         </Link>

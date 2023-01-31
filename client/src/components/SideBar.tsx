@@ -3,6 +3,9 @@ import Link from "next/link";
 import React from "react";
 import { useAuthState } from "../context/auth";
 import { Sub } from "../types";
+import Image from "next/image";
+import Slogo from "../assets/lounge_sq_b.png";
+
 type Props = {
   sub: Sub;
 };
@@ -12,15 +15,21 @@ const SideBar = ({ sub }: Props) => {
   return (
     <div className="hidden w-4/12 ml-3 md:block">
       <div className="bg-white border rounded">
-        <div className="p-3 bg-gray-300 rounded-t">
-          <p className="font-semibold text-white">Introduction</p>
+        <div className="flex p-3 bg-mint300 rounded-t text-center">
+          <Image
+            src={Slogo}
+            alt="logo"
+            width={50}
+            height={50}
+            className="ml-10"
+          />
+          <span className="font-bold text-xl text-white m-5">Introduction</span>
         </div>
         <div className="p-3 text-gray-500">
-          <p className="mb-3 text-base">{sub?.description}</p>
+          <p className="mb-3 text-bold text-base">{sub?.description}</p>
           <div className="flex mb-3 text-sm font-medium ">
             <div className="w-1/2">
-              <p>100</p>
-              <p>멤버</p>
+              <p>100 멤버</p>
             </div>
           </div>
           <p className="my-3">

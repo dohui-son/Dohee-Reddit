@@ -5,6 +5,7 @@ import axios from "axios";
 import PostCard from "@/src/components/PostCard";
 import { Post, Comment } from "@/src/types";
 import Image from "next/image";
+import Sqlogo from "../../assets/lounge_sq_b.png";
 
 const UserPage = () => {
   const router = useRouter();
@@ -52,16 +53,23 @@ const UserPage = () => {
       </div>
       {/* user data */}
       <div className="hidden w-4/12 ml-3 md:block">
-        <div className="flex items-center p-3 bg-blue-100 rounded-t">
+        <div className="flex items-center p-3 bg-mint200 rounded-t">
           <Image
-            src="https://www.gravatar.com/avatar?d=mp&f=y"
+            src={Sqlogo}
             alt="user profile"
-            className="mx-auto border border-white rounded-full"
-            width={40}
-            height={40}
+            className="mx-auto "
+            width={60}
+            height={60}
           />
         </div>
         <div className="bg-white p-7 height-10 text-gray-500 font-semibold">
+          <Image
+            src="https://www.gravatar.com/avatar?d=mp&f=y"
+            alt="user profile"
+            className="mx-auto border border-gray rounded-full"
+            width={40}
+            height={40}
+          />
           <p className="text-gray-400">User Name</p>
           <p>{data.user.username}</p>
         </div>

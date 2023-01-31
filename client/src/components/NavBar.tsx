@@ -23,7 +23,7 @@ const NavBar: React.FC = () => {
   };
   return (
     <div className="fixed inset-x-0 top-0 z-10 flex items-center justify-between h-16 px-8 bg-white">
-      <span className="text-2xl font-semibold text-gray-400">
+      <span className="p-2 text-2xl font-semibold text-gray-400">
         <Link href="/">
           <Image src={Logo} alt="service logo" width={130} height={50} />
         </Link>
@@ -43,7 +43,7 @@ const NavBar: React.FC = () => {
       <div className="flex">
         {!loading && authenticated ? (
           <button
-            className=" w-20 p-2 text-center  mr-2 text-white bg-gray-300 rounded hover:bg-gray-500"
+            className=" w-20 p-2 text-center  mr-2 text-white bg-gray-300 rounded hover:bg-mint"
             onClick={handleLogout}
           >
             Logout
@@ -52,13 +52,13 @@ const NavBar: React.FC = () => {
           <>
             <Link
               href="/login"
-              className="w-20 p-2 mr-2 text-center text-gray border border-teal-500 rounded"
+              className="w-20 p-1.5 mr-2 text-center text-gray-400 border border-gray-500 rounded hover:text-mint hover:border-mint"
             >
               Login
             </Link>
             <Link
               href="/register"
-              className="w-20 p-2 text-center text-white bg-mint-400 rounded"
+              className="w-20 p-1.5 text-center text-white bg-mint rounded hover:bg-pblue"
             >
               Signup
             </Link>

@@ -3,6 +3,8 @@ import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import React, { FormEvent, useState } from "react";
 import InputGroup from "../../components/InputGroup";
+import Image from "next/image";
+import Slogo from "../../assets/lounge_sq_b.png";
 
 const SubCreate = () => {
   const [name, setName] = useState("");
@@ -20,7 +22,7 @@ const SubCreate = () => {
       const res = await axios.post("/subs", { name, title, description });
 
       router.push(`/r/${res.data.name}`);
-      alert(`${name} 커뮤니티를 생성했습니다.`); //Todo: 이 임시 alert 삭제
+      alert(`${name} 라운지를 생성했습니다.`); //Todo: 이 임시 alert 삭제
     } catch (error: any) {
       console.log("CREATE ERROR", error);
       setErrors(error.response.data);
@@ -30,13 +32,24 @@ const SubCreate = () => {
   return (
     <div className="flex flex-col justify-center pt-16">
       <div className="w-10/12 mx-auto md:w-96">
-        <h1 className="mb-2 text-lg font-medium">👨‍👩‍👧‍👧 커뮤니티 만들기</h1>
+        <div className="flex justify-center">
+          {" "}
+          <Image
+            src={Slogo}
+            alt="logo"
+            width={90}
+            height={90}
+            className="mb-10"
+          />
+        </div>
+
+        <h1 className="mb-2 text-lg font-medium">👨‍👩‍👧‍👧 라운지 만들기</h1>
         <hr />
         <form onSubmit={handleSubmit}>
           <div className="my-6">
             <p className="font-medium">Community Name</p>
             <p className="mb-2 text-xs text-gray-400">
-              커뮤니티 이름은 수정이 불가능합니다.
+              라운지 이름은 수정이 불가능합니다. 다른 항목은 수정 가능합니다.
             </p>
             <InputGroup
               placeholder="Community Name"
@@ -48,7 +61,7 @@ const SubCreate = () => {
           <div className="my-6">
             <p className="font-medium">Topic</p>
             <p className="mb-2 text-xs text-gray-400">
-              커뮤니티의 주제를 작성해주세요. 수정 가능합니다.
+              라운지의 주제를 작성해주세요.
             </p>
             <InputGroup
               placeholder="Topic"
@@ -59,9 +72,7 @@ const SubCreate = () => {
           </div>
           <div className="my-6">
             <p className="font-medium">Description</p>
-            <p className="mb-2 text-xs text-gray-400">
-              커뮤니티에 대한 설명을 작성해주세요.
-            </p>
+            <p className="mb-2 text-xs text-gray-400">라운지를 소개해주세요.</p>
             <InputGroup
               placeholder="Description"
               value={description}
@@ -70,8 +81,8 @@ const SubCreate = () => {
             />
           </div>
           <div className="flex justify-end">
-            <button className="px-4 py-1 text-sm font-semibold rounded text-white bg-gray-400 border">
-              커뮤니티 생성
+            <button className="px-4 py-1 text-sm font-semibold rounded text-white bg-mint border hover:bg-pblue">
+              라운지 생성
             </button>
           </div>
         </form>

@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import NavBar from "../components/NavBar";
 import { SWRConfig } from "swr";
 import Head from "next/head";
+import Script from "next/script";
 
 export default function App({ Component, pageProps }: AppProps) {
   Axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL + "/api"; // NEXT_PUBLIC_SERVER_BASE_URL는 NEXT JS 환경변수
@@ -28,14 +29,13 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <Head>
-        <script
-          defer
-          src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
-          integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc"
-          crossOrigin="anonymous"
-        ></script>
-      </Head>
+      <Script
+        defer
+        src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+        integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc"
+        crossOrigin="anonymous"
+      ></Script>
+
       <SWRConfig value={{ fetcher }}>
         <AuthProvider>
           {!authRoute && <NavBar />}

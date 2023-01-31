@@ -89,8 +89,8 @@ const Home: NextPage = () => {
         <div className="hidden w-4/12 ml-3 md:block">
           <div className="bg-white border rounded">
             <div className="p-4 border-b">
-              <p className="text-lg text-gray-400 font-semibold text-center">
-                인기 커뮤니티
+              <p className="text-lg text-mint font-semibold text-center">
+                TOP LOUNGES
               </p>
             </div>
             {/* 커뮤니티목록 */}
@@ -130,7 +130,7 @@ const Home: NextPage = () => {
                   href="/subs/create"
                   className="w-full p-2 text-center text-sm text-gray-400 border border-gray-300 rounded hover:border-gray-700"
                 >
-                  커뮤니티 생성 👥
+                  라운지 생성 👥
                 </Link>
               )}
             </div>

@@ -132,6 +132,18 @@ const getPosts = async (req: Request, res: Response) => {
   }
 };
 
+const getPostList = async (req: Request, res: Response) => {
+  try {
+    const postList = await Post.find({ order: { createdAt: "DESC" } });
+
+    return res.json(postList);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "모든 포스트를 조회하던 중 문제가 생겼습니다." });
+  }
+};
+
 const router = Router();
 router.get("/:identifier/:slug", userMiddleware, getPost);
 router.post("/", userMiddleware, authMiddleware, createPost);
@@ -139,5 +151,6 @@ router.post("/:identifier/:slug/comments", userMiddleware, createPostComment);
 router.get("/:identifier/:slug/comments", userMiddleware, getPostComments);
 
 router.get("/", userMiddleware, getPosts); // [Infinite Scroll]
+router.get("/postlist", getPostList); // [all posts]
 
 export default router;

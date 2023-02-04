@@ -6,12 +6,14 @@ interface State {
   authenticated: boolean;
   user: User | undefined;
   loading: boolean;
+  isTutoring: boolean;
 }
 
 const StateContext = createContext<State>({
   authenticated: false,
   user: undefined,
   loading: true,
+  isTutoring: false,
 });
 
 const DispatchContext = createContext<any>(null);
@@ -40,6 +42,18 @@ const reducer = (state: State, { type, payload }: Action) => {
         ...state,
         loading: false,
       };
+
+    case "TUTOR_ON":
+      return {
+        ...state,
+        isTutoring: true,
+      };
+
+    case "TUTOR_OFF":
+      return {
+        ...state,
+        isTutoring: false,
+      };
     default:
       throw new Error(`Unknown action type: ${type}`);
   }
@@ -50,6 +64,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     user: null,
     authenticated: false,
     loading: true,
+    isTutoring: false,
   });
 
   const dispatch = (type: string, payload?: any) => {

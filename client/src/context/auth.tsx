@@ -43,13 +43,13 @@ const reducer = (state: State, { type, payload }: Action) => {
         loading: false,
       };
 
-    case "TUTOR_ON":
+    case "TUTORIAL_ON":
       return {
         ...state,
         isTutoring: true,
       };
 
-    case "TUTOR_OFF":
+    case "TUTORIAL_OFF":
       return {
         ...state,
         isTutoring: false,

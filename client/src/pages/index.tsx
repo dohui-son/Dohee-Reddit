@@ -8,14 +8,14 @@ import type { NextPage } from "next";
 import { Sub, Post } from "../types";
 import useSWR from "swr";
 import axios from "axios";
-import { useAuthState } from "../context/auth";
+import { useAuthDispatch, useAuthState } from "../context/auth";
 import useSWRInfinite from "swr/infinite";
 import PostCard from "../components/PostCard";
 import { useRouter } from "next/router";
 import Tutorial from "../components/Tutorial";
 
 const Home: NextPage = () => {
-  const [tutorialOpen, setTutorialOpen] = useState(false);
+  const dispatch = useAuthDispatch();
   const router = useRouter();
   const fetcher = async (url: string) => {
     return await axios.get(url).then((res) => res.data);
@@ -145,7 +145,7 @@ const Home: NextPage = () => {
                 <button
                   className="p-2 text-center text-sm text-gray-400 border border-gray-300 rounded hover:border-gray-700"
                   onClick={() => {
-                    tutorialOnoff();
+                    dispatch("TUTORIAL_ON");
                   }}
                 >
                   🧚🏻 튜토리얼

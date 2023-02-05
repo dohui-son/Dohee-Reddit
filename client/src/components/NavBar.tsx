@@ -26,7 +26,6 @@ const NavBar: React.FC = () => {
   };
 
   const searchPost = (e: KeyboardEvent) => {
-    // e.preventDefault();
     if (searchTerm.trim() === "") {
       setSearchTerm("");
       return;

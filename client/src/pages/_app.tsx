@@ -8,6 +8,8 @@ import NavBar from "../components/NavBar";
 import { SWRConfig } from "swr";
 import Head from "next/head";
 import Script from "next/script";
+import Tutorial from "../components/Tutorial";
+import { useAuthState } from "@/src/context/auth";
 
 export default function App({ Component, pageProps }: AppProps) {
   Axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL + "/api"; // NEXT_PUBLIC_SERVER_BASE_URL는 NEXT JS 환경변수
@@ -16,6 +18,8 @@ export default function App({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter();
   const authRoutes = ["/register", "/login"];
   const authRoute = authRoutes.includes(pathname);
+
+  const { isTutoring } = useAuthState();
 
   // 컴포넌트당 일일이 fetcher 작성할 필요 없음
   const fetcher = async (url: string) => {
@@ -39,6 +43,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <SWRConfig value={{ fetcher }}>
         <AuthProvider>
           {!authRoute && <NavBar />}
+          {isTutoring && <Tutorial />}
           <div className={authRoute ? "" : "pt-16 min-h-screen"}>
             <Component {...pageProps} />
           </div>

@@ -104,13 +104,17 @@ const PostCard = ({
           <Link href={`/r/${username}`} className="mx-1 hover:underline">
             Posted by {username}
           </Link>
-          {dayjs(createdAt).format("YYYY-MM-DD HH:mm")}
+          {dayjs(createdAt).format("YY-MM-DD HH:mm")}
         </p>
         <hr />
         <Link href={url} className="my-1 text-lg font-medium">
           {title}
         </Link>
-        {body && <p className="my-1 text-sm">{body}</p>}
+        {body && (
+          <p className="p-5 mb-5 h-10 overflow-hidden ... my-1 text-sm">
+            {body}
+          </p>
+        )}
         <div className="flex text-gray-400">
           <Link href={url}>
             <i className="mr-1 fas fa-comment-alt fa-xs"></i>

@@ -132,13 +132,13 @@ const Home: NextPage = () => {
                 ))}
               </div>
 
-              <div className="w-full py-6 text-center">
+              <div className="w-full py-6 text-center justify-center">
                 {authenticated && (
                   <Link
                     href="/subs/create"
-                    className="p-2.5 mr-10 bg-mint text-center text-sm text-white border border-gray-300 rounded hover:border-gray-700"
+                    className="p-2.5 bg-mint text-center text-sm text-white border border-gray-300 rounded hover:border-gray-700"
                   >
-                    라운지 생성
+                    🧚🏻 라운지 생성
                   </Link>
                 )}
 

@@ -36,23 +36,23 @@ const NavBar: React.FC = () => {
     }
   };
   return (
-    <div className="fixed inset-x-0 top-0 z-10 flex items-center justify-between h-16 px-8 bg-white">
+    <div className="fixed inset-x-0 top-0 z-10 flex items-center justify-between  h-16 px-8 bg-white">
       <span className="p-2 text-2xl font-semibold text-gray-400">
         <Link href="/">
           <Image src={Logo} alt="service logo" width={130} height={50} />
         </Link>
       </span>
 
-      <div className="max-w-full px-4">
+      <div className=" px-4 invisible w-5 md:visible md:w-80">
         <div className="relative flex items-center bg-gray-100 border rounded hover:border-gray-700 hover:bg-white">
-          <i className="ml-5 text-gray-400 fas fa-search cursor:pointer"></i>
+          <i className="ml-0 md:ml-5 text-gray-400 fas fa-search cursor:pointer"></i>
           <input
             type="text"
             placeholder="Search"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => searchPost(e)}
-            className="px-10 py-1 bg-transparent rounded focus:outline-none"
+            className=" px-10 py-1 bg-transparent rounded focus:outline-none"
           />
         </div>
       </div>
@@ -60,7 +60,7 @@ const NavBar: React.FC = () => {
       <div className="flex">
         {!loading && authenticated ? (
           <button
-            className=" w-20 p-2 text-center  mr-2 text-white bg-gray-300 rounded hover:bg-mint"
+            className="text-xs md:text-base w-20 p-2 text-center  mr-2 text-white bg-gray-300 rounded hover:bg-mint"
             onClick={handleLogout}
           >
             Logout
@@ -69,13 +69,13 @@ const NavBar: React.FC = () => {
           <>
             <Link
               href="/login"
-              className="w-20 p-1.5 mr-2 text-center text-gray-400 border border-gray-500 rounded hover:text-mint hover:border-mint"
+              className="text-xs md:text-base md:w-20 p-1.5 md:p-1.5 mr-2 text-center text-gray-400 border border-gray-400 rounded hover:text-mint hover:border-mint"
             >
               Login
             </Link>
             <Link
               href="/register"
-              className="w-20 p-1.5 text-center text-white bg-mint rounded hover:bg-pblue"
+              className=" md:w-20 p-1.5 text-center text-white bg-mint rounded hover:bg-pblue"
             >
               Signup
             </Link>

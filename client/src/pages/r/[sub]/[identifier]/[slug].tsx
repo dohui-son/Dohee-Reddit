@@ -124,7 +124,7 @@ const PostPage = () => {
                   </div>
                   <div className="py-2 pr-2">
                     <div className="flex items-center">
-                      <p className="text-xs test-gray-400">
+                      <p className="text-xs text-gray-400">
                         Posted by
                         <Link
                           href={`/u/${post.username}`}
@@ -133,11 +133,13 @@ const PostPage = () => {
                           {post.username}
                         </Link>
                         <Link href={post.url} className="mx-1 hover:underline">
-                          {dayjs(post.createdAt).format("YYY-MM-DD HH:mm")}
+                          {dayjs(post.createdAt).format("YY-MM-DD HH:mm")}
                         </Link>
                       </p>
                     </div>
-                    <h1 className="my-1 text-xl font-medium">{post.title}</h1>
+                    <h1 className="my-1 text-xl font-bold text-gray-500">
+                      {post.title}
+                    </h1>
                     <p className="my-3 text-sm">{post.body}</p>
                     <div className="text-mint mt-20">
                       <i className="mr-5 fas fa-comment-alt fa-s text-mint"></i>
@@ -191,7 +193,7 @@ const PostPage = () => {
                     {/* good bad */}
                     <div className="flex-shrink-0 w-10 py-2 text-center rounded-l">
                       <div
-                        className="flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-blue-500"
+                        className="flex justify-center p-3 w-6 mx-auto text-gray-300 rounded-full cursor-pointer hover:bg-gray-100 hover:text-blue-500"
                         onClick={() => vote(1, comment)}
                       >
                         <i
@@ -204,7 +206,7 @@ const PostPage = () => {
                         {comment.voteScore}
                       </p>
                       <div
-                        className="flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500"
+                        className="flex justify-center p-3 w-6 mx-auto text-gray-300 rounded-full cursor-pointer hover:bg-gray-100 hover:text-red-500"
                         onClick={() => vote(-1, comment)}
                       >
                         <i
@@ -226,7 +228,7 @@ const PostPage = () => {
                         <span className="text-gray-300">
                           {`${comment.voteScore} 
                         posts
-                        ${dayjs(comment.createdAt).format("YYY-MM-DD HH:mm")}
+                        ${dayjs(comment.createdAt).format("YY-MM-DD HH:mm")}
                         `}
                         </span>
                       </p>

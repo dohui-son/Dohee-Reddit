@@ -12,6 +12,7 @@ type Props = {
 
 const SideBar = ({ sub }: Props) => {
   const { authenticated } = useAuthState();
+  console.log(sub);
   return (
     <div className="hidden w-4/12 ml-3 md:block">
       <div className="bg-white border rounded">
@@ -19,21 +20,25 @@ const SideBar = ({ sub }: Props) => {
           <Image
             src={Slogo}
             alt="logo"
-            width={50}
-            height={50}
+            width={100}
+            height={100}
             className="ml-10"
           />
           <span className="font-bold text-xl text-white m-5">Introduction</span>
         </div>
-        <div className="p-3 text-gray-500">
+        <div className="p-3 text-gray-600">
           <p className="mb-3 text-bold text-base">{sub?.description}</p>
-          <div className="flex mb-3 text-sm font-medium ">
+          <div className="flex mb-3 text-sm font-medium text-gray-400">
             <div className="w-1/2">
-              <p>100 멤버</p>
+              <p>
+                Community talk :
+                {sub?.posts ? <span>{sub?.posts.length}</span> : <span>0</span>}{" "}
+                개
+              </p>
             </div>
           </div>
-          <p className="my-3">
-            {/* <i className="mr-2 fas fa-birthday-cake"></i> */}
+          <p className="my-3 text-mint">
+            <i className="mr-2 fas fa-birthday-cake"></i>
             {dayjs(sub?.createdAt).format("D MMM YYYY")}
           </p>
           {authenticated && (
@@ -42,7 +47,7 @@ const SideBar = ({ sub }: Props) => {
                 href={`/r/${sub.name}/create`}
                 className="w-full p-2 text-sm text-gray-400 border border-gray-300 rounded hover:border-gray-700"
               >
-                포스트 작성
+                💌 포스트 작성
               </Link>
             </div>
           )}

@@ -17,7 +17,10 @@ const SubCreate = () => {
   //Todo: create subs failed with Status 500
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-
+    if (name.includes("/")) {
+      alert("특수문자 / 는 라운지 이름에 포함 할 수 없습니다. ");
+      return;
+    }
     try {
       const res = await axios.post("/subs", { name, title, description });
 
@@ -81,7 +84,7 @@ const SubCreate = () => {
             />
           </div>
           <div className="flex justify-end">
-            <button className="px-4 py-1 text-sm font-semibold rounded text-white bg-mint border hover:bg-pblue">
+            <button className="px-4 py-2 text-sm font-semibold rounded text-white bg-mint border hover:bg-pblue">
               라운지 생성
             </button>
           </div>

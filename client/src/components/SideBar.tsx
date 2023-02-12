@@ -20,13 +20,13 @@ const SideBar = ({ sub }: Props) => {
           <Image
             src={Slogo}
             alt="logo"
-            width={100}
-            height={100}
+            width={60}
+            height={50}
             className="ml-10"
           />
           <span className="font-bold text-xl text-white m-5">Introduction</span>
         </div>
-        <div className="p-3 text-gray-600">
+        <div className="p-3 text-gray-500">
           <p className="mb-3 text-bold text-base">{sub?.description}</p>
           <div className="flex mb-3 text-sm font-medium text-gray-400">
             <div className="w-1/2">

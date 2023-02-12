@@ -12,8 +12,6 @@ const UserPage = () => {
   const username = router.query.username;
   const { data, error } = useSWR(username ? `/users/${username}` : null);
 
-  console.log(data);
-
   if (!data) return null;
   return (
     <div className="flex max-w-5xl px-4 pt-5 mx-auto bg-gray-50">

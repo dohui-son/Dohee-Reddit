@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { Post } from "@/src/types";
-import PostCard from "@/src/components/PostCard";
+import SearchCard from "@/src/components/SearchCard";
 
 const Search = () => {
   const router = useRouter();
@@ -31,7 +31,7 @@ const Search = () => {
                   }
                 })
                 .map((p) => (
-                  <PostCard key={p.identifier} post={p} />
+                  <SearchCard key={p.identifier} post={p} />
                 ))}
             </div>
           </div>

@@ -142,14 +142,14 @@ const Home: NextPage = () => {
                   </Link>
                 )}
 
-                <button
+                {/* <button
                   className="p-2 text-center text-sm text-gray-400 border border-gray-300 rounded hover:border-gray-700"
                   onClick={() => {
                     dispatch("TUTORIAL_ON");
                   }}
                 >
                   🧚🏻 튜토리얼
-                </button>
+                </button> */}
               </div>
             </div>
           </div>

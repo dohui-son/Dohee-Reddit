@@ -69,7 +69,7 @@ const NavBar: React.FC = () => {
           <>
             <Link
               href="/login"
-              className="text-xs md:text-base md:w-20 p-1.5 md:p-1.5 mr-2 text-center text-gray-400 border border-gray-400 rounded hover:text-mint hover:border-mint"
+              className="text-s md:text-base md:w-20 p-1.5 md:p-1.5 mr-2 text-center text-gray-400 border border-gray-400 rounded hover:text-mint hover:border-mint"
             >
               Login
             </Link>

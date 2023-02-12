@@ -1,2 +1,3 @@
-# Dohee-Reddit
-Reddit과 동일한 기능을 가진 웹 프로젝트입니다.
+# Lounge
+
+커뮤니티 웹 서비스입니다.

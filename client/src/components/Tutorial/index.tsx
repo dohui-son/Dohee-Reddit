@@ -4,7 +4,6 @@ import "./bottom-sheet.module.scss";
 
 const Tutorial = () => {
   const { isTutoring } = useAuthState();
-  console.log(isTutoring);
 
   return (
     <div>

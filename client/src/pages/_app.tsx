@@ -8,7 +8,7 @@ import NavBar from "../components/NavBar";
 import { SWRConfig } from "swr";
 import Head from "next/head";
 import Script from "next/script";
-import Tutorial from "../components/Tutorial";
+
 import { useAuthState } from "@/src/context/auth";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -43,7 +43,6 @@ export default function App({ Component, pageProps }: AppProps) {
       <SWRConfig value={{ fetcher }}>
         <AuthProvider>
           {!authRoute && <NavBar />}
-          {isTutoring && <Tutorial />}
           <div className={authRoute ? "" : "pt-16 min-h-screen"}>
             <Component {...pageProps} />
           </div>

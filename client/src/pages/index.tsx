@@ -12,7 +12,6 @@ import { useAuthDispatch, useAuthState } from "../context/auth";
 import useSWRInfinite from "swr/infinite";
 import PostCard from "../components/PostCard";
 import { useRouter } from "next/router";
-import Tutorial from "../components/Tutorial";
 
 const Home: NextPage = () => {
   const dispatch = useAuthDispatch();
@@ -73,10 +72,6 @@ const Home: NextPage = () => {
       observedElement(document.getElementById(id));
     }
   }, [posts]);
-
-  const tutorialOnoff = () => {
-    setTutorialOpen(!tutorialOpen);
-  };
 
   return (
     <>
@@ -141,15 +136,6 @@ const Home: NextPage = () => {
                     🧚🏻 라운지 생성
                   </Link>
                 )}
-
-                {/* <button
-                  className="p-2 text-center text-sm text-gray-400 border border-gray-300 rounded hover:border-gray-700"
-                  onClick={() => {
-                    dispatch("TUTORIAL_ON");
-                  }}
-                >
-                  🧚🏻 튜토리얼
-                </button> */}
               </div>
             </div>
           </div>

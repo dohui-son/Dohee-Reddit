@@ -42,18 +42,6 @@ const reducer = (state: State, { type, payload }: Action) => {
         ...state,
         loading: false,
       };
-
-    case "TUTORIAL_ON":
-      return {
-        ...state,
-        isTutoring: true,
-      };
-
-    case "TUTORIAL_OFF":
-      return {
-        ...state,
-        isTutoring: false,
-      };
     default:
       throw new Error(`Unknown action type: ${type}`);
   }

@@ -6,12 +6,17 @@ import Image from "next/image";
 import InputGroup from "../components/InputGroup";
 import { useAuthState } from "../context/auth";
 import Logo from "../assets/lounge_bl.png";
+import  "@lib/validation/regex";
 
 const Register = () => {
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
+  const [userName, setuserName] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState<any>({}); // any type 추가
+  const [errors, setErrors] = useState<{
+    email: string;
+    userName: string;
+    password: string;
+  }>({ email: "", userName: "", password: "" }); // any type 추가
 
   let router = useRouter();
   const { authenticated } = useAuthState();
@@ -25,7 +30,7 @@ const Register = () => {
       const res = await axios.post("/auth/register", {
         email,
         password,
-        username,
+        userName,
       });
 
       router.push("/login");
@@ -34,6 +39,13 @@ const Register = () => {
       setErrors(error?.response?.data || {});
     }
   };
+
+  useEffect(() => {
+    const validationTimer = setTimeout(() => {
+      setErrors({email:emailRegex(email)?})
+    }, 3000);
+    clearTimeout(validationTimer);
+  }, [email, userName, password]);
 
   return (
     <div className="bg-white">
@@ -58,10 +70,10 @@ const Register = () => {
               error={errors.email}
             />
             <InputGroup
-              placeholder="Username"
-              value={username}
-              setValue={setUsername}
-              error={errors.username}
+              placeholder="userName"
+              value={userName}
+              setValue={setuserName}
+              error={errors.userName}
             />
             <InputGroup
               placeholder="Password"

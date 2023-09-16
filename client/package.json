@@ -8,7 +8,12 @@
     "build:production": "env-cmd -f .env.production next build",
     "start:dev": "env-cmd -f .env.development next start",
     "start:production": "env-cmd -f .env.production next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "scan:i18n": "i18next-scanner --config i18next-scanner.config.js",
+    "upload:i18n": "npm run scan:i18n && node src/translation/upload.js",
+    "download:i18n": "node src/translation/download.js",
+    "serve": "npm run download:i18n && vue-cli-service serve",
+    "build": "npm run download:i18n && webpack"
   },
   "dependencies": {
     "@next/font": "13.1.2",

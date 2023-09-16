@@ -6,7 +6,7 @@ import Image from 'next/image';
 import InputGroup from '../components/InputGroup';
 import { useAuthState } from '../context/auth';
 import Logo from '../assets/lounge_bl.png';
-import { emailRegex } from '@lib/validation/regex';
+import { emailRegex, passwordRegex } from '@lib/validation/regex';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -43,9 +43,9 @@ const Register = () => {
   useEffect(() => {
     const validationTimer = setTimeout(() => {
       setErrors({
-        email: emailRegex(email) ? '이메일 형식을 확인해주세요.' : '',
+        email: emailRegex.test(email) ? '이메일 형식을 확인해주세요.' : '',
         userName: '',
-        password: passwordRegex(password)
+        password: passwordRegex.test(password)
           ? '비밀번호는 특수문자, 대문자, 소문자, 숫자를 포함해야합니다'
           : '',
       });

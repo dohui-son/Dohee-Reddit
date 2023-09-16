@@ -1,21 +1,21 @@
-import React, { FormEvent, useState } from "react";
-import { useRouter } from "next/router";
-import axios from "axios";
-import useSWR, { mutate } from "swr";
+import React, { FormEvent, useState } from 'react';
+import { useRouter } from 'next/router';
+import axios from 'axios';
+import useSWR, { mutate } from 'swr';
 
-import { Post, Comment } from "@/src/types";
-import Link from "next/link";
-import dayjs from "dayjs";
-import { useAuthState } from "@/src/context/auth";
-import classNames from "classnames";
-import Banner from "../../../../assets/small_banner.png";
-import Image from "next/image";
+import { Post, Comment } from '../../../../../src/types';
+import Link from 'next/link';
+import dayjs from 'dayjs';
+import { useAuthState } from '../../../../../src/context/auth';
+import classNames from 'classnames';
+import Banner from '../../../../assets/small_banner.png';
+import Image from 'next/image';
 
 const PostPage = () => {
   const { authenticated, user } = useAuthState();
   const router = useRouter();
   const { identifier, sub, slug } = router.query;
-  const [newComment, setNewComment] = useState("");
+  const [newComment, setNewComment] = useState('');
   //NOTE: fetcher - _app 에서 SWRConfig로 fetcher를 처리해줬기때문에 모든 컴포넌트의 useSWR에 fetcher 넣어주지 않아도 됨
   const {
     data: post,
@@ -40,7 +40,7 @@ const PostPage = () => {
   // [Comment - create]: 댓글 작성
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    if (newComment.trim() === "" || !post) return;
+    if (newComment.trim() === '' || !post) return;
 
     try {
       const res = await axios.post(
@@ -51,14 +51,14 @@ const PostPage = () => {
       );
       commentMutate();
 
-      setNewComment("");
+      setNewComment('');
     } catch (error) {
       console.log(error);
     }
   };
 
   const vote = async (value: number, comment?: Comment) => {
-    if (!authenticated) router.push("/login");
+    if (!authenticated) router.push('/login');
 
     // 이미 클릭한 vote를 다시 누른 경우: reset
     if (
@@ -69,7 +69,7 @@ const PostPage = () => {
     }
 
     try {
-      const res = await axios.post("/votes", {
+      const res = await axios.post('/votes', {
         identifier,
         slug,
         commentIdentifier: comment?.identifier,
@@ -102,8 +102,8 @@ const PostPage = () => {
                   <div className="flex-shrink-0 w-10 py-2 text-center rounded-l">
                     <div
                       className={classNames(
-                        "flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500",
-                        { "bg-blue-200": post.userVote === 1 }
+                        'flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500',
+                        { 'bg-blue-200': post.userVote === 1 }
                       )}
                       onClick={() => vote(1)}
                     >
@@ -114,8 +114,8 @@ const PostPage = () => {
                     </p>
                     <div
                       className={classNames(
-                        "flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500",
-                        { "bg-red-200": post.userVote === -1 }
+                        'flex justify-center w-6 mx-auto text-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:text-red-500',
+                        { 'bg-red-200': post.userVote === -1 }
                       )}
                       onClick={() => vote(-1)}
                     >
@@ -133,7 +133,7 @@ const PostPage = () => {
                           {post.username}
                         </Link>
                         <Link href={post.url} className="mx-1 hover:underline">
-                          {dayjs(post.createdAt).format("YY-MM-DD HH:mm")}
+                          {dayjs(post.createdAt).format('YY-MM-DD HH:mm')}
                         </Link>
                       </p>
                     </div>
@@ -157,7 +157,7 @@ const PostPage = () => {
                           className="font-semibold text-blue-400"
                         >
                           {user?.username}
-                        </Link>{" "}
+                        </Link>{' '}
                         님의 댓글 작성
                       </p>
                       <form onSubmit={handleSubmit}>
@@ -169,7 +169,7 @@ const PostPage = () => {
                         <div className="flex justify-end">
                           <button
                             className="px-3 py-1 text-gray-300 border border-gray-300 rounded hover:text-white hover:bg-mint"
-                            disabled={newComment.trim() === ""}
+                            disabled={newComment.trim() === ''}
                           >
                             댓글 작성
                           </button>
@@ -197,8 +197,8 @@ const PostPage = () => {
                         onClick={() => vote(1, comment)}
                       >
                         <i
-                          className={classNames("fas fa-arrow-up", {
-                            "text-blue-500": comment.userVote === 1,
+                          className={classNames('fas fa-arrow-up', {
+                            'text-blue-500': comment.userVote === 1,
                           })}
                         ></i>
                       </div>
@@ -210,8 +210,8 @@ const PostPage = () => {
                         onClick={() => vote(-1, comment)}
                       >
                         <i
-                          className={classNames("fas fa-arrow-down", {
-                            "text-red-500": comment.userVote === -1,
+                          className={classNames('fas fa-arrow-down', {
+                            'text-red-500': comment.userVote === -1,
                           })}
                         ></i>
                       </div>
@@ -228,7 +228,7 @@ const PostPage = () => {
                         <span className="text-gray-300">
                           {`${comment.voteScore} 
                         posts
-                        ${dayjs(comment.createdAt).format("YY-MM-DD HH:mm")}
+                        ${dayjs(comment.createdAt).format('YY-MM-DD HH:mm')}
                         `}
                         </span>
                       </p>

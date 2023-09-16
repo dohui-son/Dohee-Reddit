@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import useSWR from "swr";
-import { Post } from "@/src/types";
-import SearchCard from "@/src/components/SearchCard";
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import useSWR from 'swr';
+import { Post } from '../../../src/types';
+import SearchCard from '../../../src/components/SearchCard';
 
 const Search = () => {
   const router = useRouter();

@@ -1,39 +1,39 @@
-import React, { FormEvent, useEffect, useState } from "react";
-import axios from "axios";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import Image from "next/image";
-import InputGroup from "../components/InputGroup";
-import { useAuthState } from "../context/auth";
-import Logo from "../assets/lounge_bl.png";
-import  "@lib/validation/regex";
+import React, { FormEvent, useEffect, useState } from 'react';
+import axios from 'axios';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
+import InputGroup from '../components/InputGroup';
+import { useAuthState } from '../context/auth';
+import Logo from '../assets/lounge_bl.png';
+import { emailRegex } from '@lib/validation/regex';
 
 const Register = () => {
-  const [email, setEmail] = useState("");
-  const [userName, setuserName] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [userName, setuserName] = useState('');
+  const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{
     email: string;
     userName: string;
     password: string;
-  }>({ email: "", userName: "", password: "" }); // any type 추가
+  }>({ email: '', userName: '', password: '' }); // any type 추가
 
   let router = useRouter();
   const { authenticated } = useAuthState();
 
-  if (authenticated) router.push("/");
+  if (authenticated) router.push('/');
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault(); // onSubmit 이벤트가 일어났을때 refrsh 되는것 방지
 
     try {
-      const res = await axios.post("/auth/register", {
+      const res = await axios.post('/auth/register', {
         email,
         password,
         userName,
       });
 
-      router.push("/login");
+      router.push('/login');
     } catch (error: any) {
       console.log(error);
       setErrors(error?.response?.data || {});
@@ -42,7 +42,13 @@ const Register = () => {
 
   useEffect(() => {
     const validationTimer = setTimeout(() => {
-      setErrors({email:emailRegex(email)?})
+      setErrors({
+        email: emailRegex(email) ? '이메일 형식을 확인해주세요.' : '',
+        userName: '',
+        password: passwordRegex(password)
+          ? '비밀번호는 특수문자, 대문자, 소문자, 숫자를 포함해야합니다'
+          : '',
+      });
     }, 3000);
     clearTimeout(validationTimer);
   }, [email, userName, password]);
@@ -57,7 +63,7 @@ const Register = () => {
           alt="logo"
           className="m-10 cursor-pointer"
           onClick={() => {
-            router.push("/");
+            router.push('/');
           }}
         />
         <div className="w-4/12 mx-auto md:d-96">
